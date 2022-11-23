@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)"
-options: "8f6ab380861f14a82149f74b1189244a3f68afce6c2bfa7522888df7d23db92a"
-build_start_time: [1668966601, 717175960]
-build_end_time: [1668966601, 742844104]
-inputs:
-  "/Users/kereminci/Desktop/flutter_application_2/macos/Flutter/GeneratedPluginRegistrant.swift": !private [1668966589, 46498775]
-  "/Users/kereminci/Desktop/flutter_application_2/macos/Runner/AppDelegate.swift": !private [1667976946, 0]
-  "/Users/kereminci/Desktop/flutter_application_2/macos/Runner/MainFlutterWindow.swift": !private [1667976946, 0]
