@@ -61,8 +61,9 @@ class InputTextField extends StatelessWidget {
   const InputTextField({
     Key? key,
     required this.labelText,
+    this.isEnabled = true,
   }) : super(key: key);
-
+  final bool isEnabled;
   final String? labelText;
 
   @override
@@ -73,6 +74,7 @@ class InputTextField extends StatelessWidget {
           decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: labelText,
+        enabled: isEnabled,
       )),
     );
   }
