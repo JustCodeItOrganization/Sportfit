@@ -13,7 +13,7 @@ class PageTwo extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          child: Text('Go'),
+          child: Text('Go Back'),
           onPressed: () {
             Navigator.pop(context);
           },

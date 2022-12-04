@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/pageone.dart';
+import 'package:flutter_application_2/view/pagetwo.dart';
+import 'package:flutter_application_2/view/home_view.dart';
 
 class NavMenu extends StatelessWidget {
   const NavMenu({super.key});
@@ -36,19 +39,31 @@ class NavMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Favs'),
-            onTap: () => print('FavSSSSSSSSSS'),
+            title: Text('PageOne'),
+            onTap: () {
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PageOne())
+            );
+          },
           ),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Favs'),
-            onTap: () => print('FavSSSSSSSSSS'),
+            title: Text('PageTwo'),
+            onTap: () {
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PageTwo())
+            );
+          },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Favs'),
-            onTap: () => print('FavSSSSSSSSSS'),
+            title: Text('HomeView'),
+            onTap: () {
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomeView())
+            );
+          },
           ),
         ],
       )
