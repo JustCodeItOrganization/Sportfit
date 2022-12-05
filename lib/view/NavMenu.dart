@@ -5,6 +5,7 @@ import 'package:flutter_application_2/view/pagefour.dart';
 import 'package:flutter_application_2/view/pagefive.dart';
 import 'package:flutter_application_2/view/pagethree.dart';
 import 'package:flutter_application_2/view/home_view.dart';
+import 'package:flutter_application_2/view/input_module_view.dart';
 
 class NavMenu extends StatelessWidget {
   const NavMenu({super.key});
@@ -51,10 +52,10 @@ class NavMenu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('PageTwo'),
+            title: Text('Input Module'),
             onTap: () {
             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PageTwo())
+            MaterialPageRoute(builder: (context) => InputModuleView())
             );
           },
           ),
