@@ -4,7 +4,7 @@ import 'package:flutter_application_2/view/page_cardio_view.dart';
 import 'package:flutter_application_2/view/page_diet_view.dart';
 import 'package:flutter_application_2/view/page_profile_view.dart';
 import 'package:flutter_application_2/view/page_workout_view.dart';
-import 'package:flutter_application_2/view_model/navMenuPageModel.dart';
+import 'package:flutter_application_2/widgets/navigation_page.dart';
 
 class NavMenu extends StatelessWidget {
   const NavMenu({super.key});
