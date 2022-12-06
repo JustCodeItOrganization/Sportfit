@@ -24,7 +24,7 @@ class _PageProfileViewState extends State<PageProfileView> {
           bottom: const TabBar(
             tabs: [
               //tablerin isimleri
-              Tab(text: "page1"),
+              Tab(text: "Profile"),
             ],
           ),
         ),

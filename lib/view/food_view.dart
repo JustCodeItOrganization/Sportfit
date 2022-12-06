@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/widgets/list_item.dart';
 
-class ListModuleFood extends StatefulWidget {
-  const ListModuleFood({super.key});
+class FoodView extends StatefulWidget {
+  const FoodView({super.key});
 
   @override
-  State<ListModuleFood> createState() => _ListModuleFood();
+  State<FoodView> createState() => _FoodView();
 }
 
-class _ListModuleFood extends State<ListModuleFood> {
+class _FoodView extends State<FoodView> {
   List<Item> _data = [];
 
-  _ListModuleFood() {
+  __FoodView() {
     Item i1 = Item(description: "yemek1", title: "yemek adi1");
     _data.add(i1);
     Item i2 = Item(description: "yemek2", title: "yemek adi2");
@@ -54,9 +54,6 @@ class _ListModuleFood extends State<ListModuleFood> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List"),
-      ),
       body: SingleChildScrollView(
         child: Container(
           child: _buildPanel(),

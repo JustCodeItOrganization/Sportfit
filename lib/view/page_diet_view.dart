@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/food_view.dart';
+import 'package:flutter_application_2/widgets/list_module.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
 
 class PageDietView extends StatefulWidget {
@@ -13,7 +15,7 @@ class _PageDietViewState extends State<PageDietView> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       // length = tab sayisi
-      length: 2,
+      length: 1,
 
       child: Scaffold(
         drawer: const NavMenu(),
@@ -23,16 +25,14 @@ class _PageDietViewState extends State<PageDietView> {
           bottom: const TabBar(
             tabs: [
               // tablerin isimleri
-              Tab(text: "page1"),
-              Tab(text: "page2"),
+              Tab(text: "Food"),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color: Colors.red),
-            Container(color: Colors.green),
+            FoodView(),
           ],
         ),
       ),

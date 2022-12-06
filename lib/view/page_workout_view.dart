@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/exercise_view.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
 
 class PageWorkoutView extends StatefulWidget {
@@ -13,7 +14,7 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       // length = tab sayisi
-      length: 2,
+      length: 1,
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
@@ -22,16 +23,14 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
           bottom: const TabBar(
             tabs: [
               //tablerin isimleri
-              Tab(text: "page1"),
-              Tab(text: "page2"),
+              Tab(text: "Workout"),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color: Colors.red),
-            Container(color: Colors.green),
+            ExerciseView()
           ],
         ),
       ),

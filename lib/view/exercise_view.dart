@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/widgets/list_item.dart';
 
-class ListModuleExercise extends StatefulWidget {
-  const ListModuleExercise({super.key});
+class ExerciseView extends StatefulWidget {
+  const ExerciseView({super.key});
 
   @override
-  State<ListModuleExercise> createState() => _ListModuleExercise();
+  State<ExerciseView> createState() => _ExerciseView();
 }
 
-class _ListModuleExercise extends State<ListModuleExercise> {
+class _ExerciseView extends State<ExerciseView> {
   List<Item> _data = [];
 
-  _ListModuleExercise() {
+  _ExerciseView() {
     Item i1 = Item(description: "egzersiz1", title: "egzersiz adi1");
     _data.add(i1);
     Item i2 = Item(description: "egzersiz2", title: "egzersiz adi2");
@@ -54,9 +53,6 @@ class _ListModuleExercise extends State<ListModuleExercise> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List"),
-      ),
       body: SingleChildScrollView(
         child: Container(
           child: _buildPanel(),
