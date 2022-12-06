@@ -91,8 +91,8 @@ class _TimerView extends State<TimerView> {
           )
         : ButtonWidget(
             text: "Başlat",
-            color: Colors.black,
-            backgroundColor: Colors.white,
+            color: Colors.white,
+            backgroundColor: Colors.blue,
             onClicked: () {
               startTimer();
             },
@@ -127,7 +127,7 @@ class _TimerView extends State<TimerView> {
         '$seconds',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: Colors.blue,
           fontSize: 80,
         ),
       );

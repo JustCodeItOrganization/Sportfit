@@ -15,7 +15,7 @@ class ButtonWidget extends StatelessWidget {
     super.key,
     required this.text,
     required this.onClicked,
-    this.backgroundColor = Colors.black,
+    this.backgroundColor = Colors.blue,
     this.color = Colors.white,
   });
 
