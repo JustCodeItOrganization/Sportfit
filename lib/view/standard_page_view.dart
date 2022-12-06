@@ -6,24 +6,16 @@ class StandardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(
-      //  title: Center(
-      //    child: Text(
-      //      'HOME',
-      //      style: Theme.of(context)
-      //          .textTheme
-      //          .headlineLarge
-      //          ?.copyWith(color: StandardPageColor.headline5Color),
-      //    ),
-      //  ),
-      //),
       appBar: AppBar(
-        bottom: const TabBar(tabs: [
-          Tab(text: "page1"),
-          Tab(text: "page2"),
-        ]),
+        bottom: const TabBar(
+          tabs: [
+            Tab(text: "page1"),
+            Tab(text: "page2"),
+          ],
+        ),
       ),
       body: TabBarView(children: [
+        // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
         const StandardPageFirstView(),
         Container(color: Colors.red),
       ]),
@@ -50,7 +42,8 @@ class StandardPage extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.blue,
                 ),
-              ),),
+              ),
+            ),
           ],
         ),
       ),
@@ -134,21 +127,6 @@ class StandardPageFirstView extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineLarge,
             ),
           ),
-          //ElevatedButton(
-          //  //style: ButtonStyle(
-          //  style: OutlinedButton.styleFrom(
-          //      backgroundColor: Colors.blue,
-          //      padding: const EdgeInsets.all(10)),
-          //  //foregroundColor:
-          //  //MaterialStateProperty.all<Color>(Colors.blue),
-          //  //),
-          //  onPressed: () {},
-          //
-          //  child: const SizedBox(
-          //    //width: 200,
-          //    child: Text("BUTTONxxxx"),
-          //  ),
-          //),
           const HomeButtons(textInButton: "Profile"),
           const HomeButtons(textInButton: "Workout Plan"),
           const HomeButtons(textInButton: "Diet Plan"),

@@ -11,7 +11,8 @@ class StandardPageView2 extends StatefulWidget {
 class _StandardPageView2State extends State<StandardPageView2> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return const DefaultTabController(
+      // length = tab sayisi
       length: 2,
       child: StandardPage(),
       //body: TabBarView(children: [
