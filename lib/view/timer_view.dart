@@ -27,7 +27,7 @@ class _TimerView extends State<TimerView> {
       resetTimer();
     }
 
-    timer = Timer.periodic(Duration(milliseconds: 50), (_) {
+    timer = Timer.periodic(Duration(milliseconds: 1000), (_) {
       if (seconds > 0) {
         setState(() => seconds--);
       } else {
@@ -112,7 +112,7 @@ class _TimerView extends State<TimerView> {
               value: 1 - seconds / maxSeconds,
               valueColor: AlwaysStoppedAnimation(Colors.white),
               strokeWidth: 12,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.blue,
             ),
             Center(
               child: buildTime(),
@@ -125,6 +125,7 @@ class _TimerView extends State<TimerView> {
     if (seconds == 0) {
       return Icon(Icons.done, color: Colors.greenAccent, size: 112);
     } else {
+      //seconds = (seconds * 60).toInt();
       return Text(
         '$seconds',
         style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/home_view.dart';
+import 'package:flutter_application_2/view/timer_view.dart';
 import 'package:flutter_application_2/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeView(),
+        //home: HomeView(),
+        home:TimerView(),
       ),
     );
   }
