@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/pageHome.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_2/view/pageHome.dart';
 
 class InputModuleView extends StatelessWidget {
   @override
@@ -49,8 +49,7 @@ class inputElevatedButton extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     //builder: (context) => const HomeView(),
-                    builder: (context) => const pageHome(),
-
+                    builder: (context) => const HomePageView(),
                   ),
                 )
               }),

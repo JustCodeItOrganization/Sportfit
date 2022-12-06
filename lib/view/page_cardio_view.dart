@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/NavMenu.dart';
 
-
-
-
-
-
-class pageCardio extends StatefulWidget {
-  const pageCardio({Key? key}) : super(key: key);
+class PageCardioView extends StatefulWidget {
+  const PageCardioView({Key? key}) : super(key: key);
 
   @override
-  _pageCardioState createState() => _pageCardioState();
+  _PageCardioViewState createState() => _PageCardioViewState();
 }
 
-class _pageCardioState extends State<pageCardio> {
+class _PageCardioViewState extends State<PageCardioView> {
   @override
   Widget build(BuildContext context) {
-    return  DefaultTabController(
+    return DefaultTabController(
       // length = tab sayisi
       length: 2,
       child: Scaffold(
@@ -33,11 +28,10 @@ class _pageCardioState extends State<pageCardio> {
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color:Colors.red),
+            Container(color: Colors.red),
             Container(color: Colors.green),
           ],
         ),
-
       ),
     );
   }

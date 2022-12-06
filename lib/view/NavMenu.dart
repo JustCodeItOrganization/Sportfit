@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/pageHome.dart';
+import 'package:flutter_application_2/view/home_page_view.dart';
 import 'package:flutter_application_2/view/pageProfile.dart';
 import 'package:flutter_application_2/view/pageDiet.dart';
 import 'package:flutter_application_2/view/pageCardio.dart';
 import 'package:flutter_application_2/view/pageWorkout.dart';
 import 'package:flutter_application_2/view_model/navMenuPageModel.dart';
 import 'package:flutter_application_2/view/input_module_view.dart';
-
 
 class NavMenu extends StatelessWidget {
   const NavMenu({super.key});
@@ -38,15 +37,15 @@ class NavMenu extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         const NavMenuPage(
-            navMenuPageName: "pageHome", navMenuPageView: pageHome()),
+            navMenuPageName: "HomePageView", navMenuPageView: HomePageView()),
         const NavMenuPage(
-            navMenuPageName: "pageProfile", navMenuPageView: pageProfile()),
+            navMenuPageName: "pageProfile", navMenuPageView: PageProfileView()),
         const NavMenuPage(
-            navMenuPageName: "PageWorkout", navMenuPageView: pageWorkout()),
+            navMenuPageName: "PageWorkout", navMenuPageView: PageWorkoutView()),
         const NavMenuPage(
-            navMenuPageName: "PageDiet", navMenuPageView: pageDiet()),
+            navMenuPageName: "PageDiet", navMenuPageView: PageDietView()),
         const NavMenuPage(
-            navMenuPageName: "PageCardio", navMenuPageView: pageCardio()),
+            navMenuPageName: "PageCardio", navMenuPageView: PageCardioView()),
         //Divider(),
         //const NavMenuPage(
         //    navMenuPageName: "HomeView", navMenuPageView: HomeView()),
@@ -54,5 +53,3 @@ class NavMenu extends StatelessWidget {
     ));
   }
 }
-
-

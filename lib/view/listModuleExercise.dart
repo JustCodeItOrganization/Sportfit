@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/listItem.dart';
+import 'package:flutter_application_2/widgets/list_item.dart';
 
 class ListModuleExercise extends StatefulWidget {
   const ListModuleExercise({super.key});
