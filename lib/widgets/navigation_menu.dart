@@ -16,8 +16,8 @@ class NavMenu extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         UserAccountsDrawerHeader(
-          accountName: Text('Deneme'),
-          accountEmail: Text('Deneme'),
+          accountName: Text('Ali Veli'),
+          accountEmail: Text('aliveli@mail.com'),
           currentAccountPicture: CircleAvatar(
             child: ClipOval(
               child: Image.network(
@@ -36,15 +36,30 @@ class NavMenu extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         const NavMenuPage(
-            navMenuPageName: "pageHome", navMenuPageView: PageHomeView()),
+          navMenuPageName: "Ana Sayfa",
+          navMenuPageView: PageHomeView(),
+          navMenuIcon: Icon(Icons.home),
+        ),
         const NavMenuPage(
-            navMenuPageName: "pageProfile", navMenuPageView: PageProfileView()),
+          navMenuPageName: "Profil Sayfası",
+          navMenuPageView: PageProfileView(),
+          navMenuIcon: Icon(Icons.person),
+        ),
         const NavMenuPage(
-            navMenuPageName: "PageWorkout", navMenuPageView: PageWorkoutView()),
+          navMenuPageName: "Antrenman Sayfası",
+          navMenuPageView: PageWorkoutView(),
+          navMenuIcon: Icon(Icons.sports),
+        ),
         const NavMenuPage(
-            navMenuPageName: "PageDiet", navMenuPageView: PageDietView()),
+          navMenuPageName: "Diyet Sayfası",
+          navMenuPageView: PageDietView(),
+          navMenuIcon: Icon(Icons.food_bank),
+        ),
         const NavMenuPage(
-            navMenuPageName: "PageCardio", navMenuPageView: PageCardioView()),
+          navMenuPageName: "Kardiyo Sayfası",
+          navMenuPageView: PageCardioView(),
+          navMenuIcon: Icon(Icons.heart_broken),
+        ),
         //Divider(),
         //const NavMenuPage(
         //    navMenuPageName: "HomeView", navMenuPageView: HomeView()),

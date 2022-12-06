@@ -12,30 +12,19 @@ class PageProfileView extends StatefulWidget {
 class _PageProfileViewState extends State<PageProfileView> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      // length = tab sayisi
-      length: 1,
-
-      child: Scaffold(
-        drawer: const NavMenu(),
-        appBar: AppBar(
-          title: Text("My Profile"),
-          centerTitle: true,
-          bottom: const TabBar(
-            tabs: [
-              //tablerin isimleri
-              Tab(text: "page1"),
-            ],
+    return MaterialApp(
+      title: "SportFit",
+      home: Scaffold(
+          drawer: const NavMenu(),
+          appBar: AppBar(
+            title: const Text(
+              "Profil",
+              style: TextStyle(color: Colors.white),
+            ),
+            centerTitle: true,
+            elevation: 0,
           ),
-        ),
-        body: TabBarView(
-          children: [
-            // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            // page protfile
-            ProfileView(),
-          ],
-        ),
-      ),
+          body: Center(child: ProfileView())),
     );
   }
 }
