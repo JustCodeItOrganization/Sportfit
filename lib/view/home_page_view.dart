@@ -18,6 +18,8 @@ class _HomePageViewState extends State<PageHomeView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
+          title: Text("Home Page"),
+          centerTitle: true,
           bottom: const TabBar(
             tabs: [
               Tab(text: "page1"),

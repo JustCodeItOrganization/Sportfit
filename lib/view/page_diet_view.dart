@@ -18,6 +18,8 @@ class _PageDietViewState extends State<PageDietView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
+          title: Text("Diet"),
+          centerTitle: true,
           bottom: const TabBar(
             tabs: [
               // tablerin isimleri

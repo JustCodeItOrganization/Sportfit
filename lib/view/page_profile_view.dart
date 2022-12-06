@@ -19,6 +19,8 @@ class _PageProfileViewState extends State<PageProfileView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
+          title: Text("My Profile"),
+          centerTitle: true,
           bottom: const TabBar(
             tabs: [
               //tablerin isimleri

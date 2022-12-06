@@ -17,6 +17,8 @@ class _PageCardioViewState extends State<PageCardioView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
+          title: Text("Cardio"),
+          centerTitle: true,
           bottom: const TabBar(
             tabs: [
               // tablerin isimleri
