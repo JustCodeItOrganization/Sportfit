@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/home_view.dart';
 import 'package:flutter_application_2/view/input_module_view.dart';
 import 'package:flutter_application_2/view/profile_view.dart';
 import 'package:flutter_application_2/view_model/home_view_model.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_2/view/pageHome.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         //home: ProfileView(),
-        home: HomeView(),
+        //home: HomeView(),
+        home:pageHome(),
       ),
     );
   }

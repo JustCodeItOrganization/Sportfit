@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/NavMenu.dart';
-import 'package:flutter_application_2/view/pagetwo.dart';
-import 'package:flutter_application_2/view/pagefour.dart';
+import 'package:flutter_application_2/view/pageProfile.dart';
+import 'package:flutter_application_2/view/pageDiet.dart';
+import 'package:flutter_application_2/view/pageCardio.dart';
 
 
 class PageFive extends StatelessWidget {
@@ -19,7 +20,7 @@ class PageFive extends StatelessWidget {
           child: Text('Go'),
           onPressed: () {
             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PageFour())
+            MaterialPageRoute(builder: (context) => pageCardio())
             );
           },
           ) 
