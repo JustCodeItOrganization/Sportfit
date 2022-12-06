@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/home_view.dart';
-import 'package:flutter_application_2/view/timer_view.dart';
+import 'package:flutter_application_2/view/home_page_view.dart';
 import 'package:flutter_application_2/view_model/home_view_model.dart';
+import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
+        ChangeNotifierProvider(create: (_) => InputViewModel())
       ],
       child: MaterialApp(
         title: 'MVVM',
@@ -23,8 +24,9 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        //home: ProfileView(),
         //home: HomeView(),
-        home:TimerView(),
+        home: PageHomeView(),
       ),
     );
   }
