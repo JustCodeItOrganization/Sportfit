@@ -18,7 +18,7 @@ class _PageProfileViewState extends State<PageProfileView> {
           drawer: const NavMenu(),
           appBar: AppBar(
             title: const Text(
-              "Profil",
+              "Profil Sayfası",
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,

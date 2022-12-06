@@ -18,21 +18,24 @@ class _PageDietViewState extends State<PageDietView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
-          title: Text("Diet"),
+          title: Text(
+            "Diyet Sayfası",
+            style: TextStyle(color: Colors.white),
+          ),
           centerTitle: true,
           bottom: const TabBar(
             tabs: [
               // tablerin isimleri
-              Tab(text: "page1"),
-              Tab(text: "page2"),
+              Tab(text: "Diyet Tab 1"),
+              Tab(text: "Diyet Tab 2"),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color: Colors.red),
-            Container(color: Colors.green),
+            Container(color: Colors.white),
+            Container(color: Colors.white),
           ],
         ),
       ),
