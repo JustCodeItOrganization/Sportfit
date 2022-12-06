@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/NavMenu.dart';
 
-
-
-
-class pageDiet extends StatefulWidget {
-  const pageDiet({Key? key}) : super(key: key);
+class PageDietView extends StatefulWidget {
+  const PageDietView({Key? key}) : super(key: key);
 
   @override
-  _pageDietState createState() => _pageDietState();
+  _PageDietViewState createState() => _PageDietViewState();
 }
 
-class _pageDietState extends State<pageDiet> {
+class _PageDietViewState extends State<PageDietView> {
   @override
   Widget build(BuildContext context) {
-    return  DefaultTabController(
+    return DefaultTabController(
       // length = tab sayisi
       length: 2,
 
@@ -32,11 +29,10 @@ class _pageDietState extends State<pageDiet> {
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color:Colors.red),
+            Container(color: Colors.red),
             Container(color: Colors.green),
           ],
         ),
-
       ),
     );
   }

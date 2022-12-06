@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/NavMenu.dart';
+import 'package:flutter_application_2/view/input_module_view.dart';
 
-
-
-
-
-
-
-class pageHome extends StatefulWidget {
-  const pageHome({Key? key}) : super(key: key);
+class HomePageView extends StatefulWidget {
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
-  _pageHomeState createState() => _pageHomeState();
+  _HomePageViewState createState() => _HomePageViewState();
 }
 
-class _pageHomeState extends State<pageHome> {
+class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
-    return  DefaultTabController(
+    return DefaultTabController(
       // length = tab sayisi
       length: 2,
       child: Scaffold(
@@ -33,44 +28,21 @@ class _pageHomeState extends State<pageHome> {
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            const pageHomeFirstSectionView(),
+            const HomePageViewFirstSectionView(),
             Container(color: Colors.green),
           ],
         ),
-
       ),
     );
   }
 }
-
 
 class StandardPageColor {
   static Color headline5Color = Colors.yellow;
 }
 
-class HomeButtons extends StatelessWidget {
-  final String textInButton;
-  const HomeButtons({Key? key, required this.textInButton}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: SizedBox(
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              ),
-          onPressed: () {},
-          child: Text(textInButton),
-          //),
-        ),
-      ),
-    );
-  }
-}
-
-class pageHomeFirstSectionView extends StatelessWidget {
-  const pageHomeFirstSectionView({Key? key}) : super(key: key);
+class HomePageViewFirstSectionView extends StatelessWidget {
+  const HomePageViewFirstSectionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +79,8 @@ class pageHomeFirstSectionView extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineLarge,
             ),
           ),
-          const HomeButtons(textInButton: "Profile"),
-          const HomeButtons(textInButton: "Workout Plan"),
-          const HomeButtons(textInButton: "Diet Plan"),
-          const HomeButtons(textInButton: "Cardio"),
+          inputElevatedButton(),
+          inputElevatedButton(),
         ]);
   }
 }
