@@ -36,15 +36,26 @@ class NavMenu extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         const NavMenuPage(
-            navMenuPageName: "pageHome", navMenuPageView: PageHomeView()),
+          navMenuPageName: "Home",
+          navMenuPageView: PageHomeView(),
+          leadingIcon: Icon(Icons.home),
+        ),
         const NavMenuPage(
-            navMenuPageName: "pageProfile", navMenuPageView: PageProfileView()),
+            navMenuPageName: "Profile",
+            navMenuPageView: PageProfileView(),
+            leadingIcon: Icon(Icons.person)),
         const NavMenuPage(
-            navMenuPageName: "PageWorkout", navMenuPageView: PageWorkoutView()),
+            navMenuPageName: "Workout",
+            navMenuPageView: PageWorkoutView(),
+            leadingIcon: Icon(Icons.work)),
         const NavMenuPage(
-            navMenuPageName: "PageDiet", navMenuPageView: PageDietView()),
+            navMenuPageName: "Diet",
+            navMenuPageView: PageDietView(),
+            leadingIcon: Icon(Icons.food_bank)),
         const NavMenuPage(
-            navMenuPageName: "PageCardio", navMenuPageView: PageCardioView()),
+            navMenuPageName: "Cardio",
+            navMenuPageView: PageCardioView(),
+            leadingIcon: Icon(Icons.run_circle_sharp)),
         //Divider(),
         //const NavMenuPage(
         //    navMenuPageName: "HomeView", navMenuPageView: HomeView()),
