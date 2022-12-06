@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+
+class StandardPage extends StatelessWidget {
+  const StandardPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            'HOME',
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(color: StandardPageColor.headline5Color),
+          ),
+        ),
+      ),
+      body: Column(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: 200,
+              height: 200,
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.only(top: 100),
+              //alignment: Alignment.topCenter,
+              decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage("assets/welcome.png"),
+                  ),
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                  border: Border.all(width: 15, color: Colors.blue),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 5,
+                      blurRadius: 20,
+                      //offset: Offset(0, 25),
+                    ),
+                  ]),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 25),
+              child: Text(
+                "YENI DENEME TEXT",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+            ),
+            //ElevatedButton(
+            //  //style: ButtonStyle(
+            //  style: OutlinedButton.styleFrom(
+            //      backgroundColor: Colors.blue,
+            //      padding: const EdgeInsets.all(10)),
+            //  //foregroundColor:
+            //  //MaterialStateProperty.all<Color>(Colors.blue),
+            //  //),
+            //  onPressed: () {},
+            //
+            //  child: const SizedBox(
+            //    //width: 200,
+            //    child: Text("BUTTONxxxx"),
+            //  ),
+            //),
+            const HomeButtons(textInButton: "Profile"),
+            const HomeButtons(textInButton: "Workout Plan"),
+            const HomeButtons(textInButton: "Diet Plan"),
+            const HomeButtons(textInButton: "Cardio"),
+          ]),
+          bottomNavigationBar: BottomNavigationBar(items: const[
+            BottomNavigationBarItem(icon: Icon(Icons.abc_outlined), label: "LABEL1"),
+            BottomNavigationBarItem(icon: Icon(Icons.abc_outlined), label: "LABEL2"),
+
+          ]),
+    );
+  }
+}
+
+class StandardPageColor {
+  static Color headline5Color = Colors.yellow;
+}
+
+class HomeButtons extends StatelessWidget {
+  final String textInButton;
+  const HomeButtons({Key? key, required this.textInButton}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 5),
+      child: SizedBox(
+        child: ElevatedButton(
+          //style: ButtonStyle(
+          //style: ElevatedButton.styleFrom(
+          //  backgroundColor: Colors.blue,
+          //  padding: const EdgeInsets.all(10),
+          //),
+          //foregroundColor:
+          //MaterialStateProperty.all<Color>(Colors.blue),
+          //),
+          style: ElevatedButton.styleFrom(
+              //maximumSize: const Size(50,50),
+              //minimumSize: const Size(25,30),
+              ),
+          onPressed: () {},
+          //child: SizedBox(
+          //width: 50,
+          child: Text(textInButton),
+          //),
+        ),
+      ),
+    );
+  }
+}
