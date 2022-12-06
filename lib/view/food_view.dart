@@ -11,7 +11,7 @@ class FoodView extends StatefulWidget {
 class _FoodView extends State<FoodView> {
   List<Item> _data = [];
 
-  __FoodView() {
+  _FoodView() {
     Item i1 = Item(description: "yemek1", title: "yemek adi1");
     _data.add(i1);
     Item i2 = Item(description: "yemek2", title: "yemek adi2");
