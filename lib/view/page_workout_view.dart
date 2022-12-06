@@ -17,13 +17,16 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
       child: Scaffold(
         drawer: const NavMenu(),
         appBar: AppBar(
-          title: Text("Workout"),
+          title: Text(
+            "Antrenman Sayfası",
+            style: TextStyle(color: Colors.white),
+          ),
           centerTitle: true,
           bottom: const TabBar(
             tabs: [
               //tablerin isimleri
-              Tab(text: "page1"),
-              Tab(text: "page2"),
+              Tab(text: "Antrenman Sayfası Tab 1"),
+              Tab(text: "Antrenman Sayfası Tab 2"),
             ],
           ),
         ),
