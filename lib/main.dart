@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/input_module_view.dart';
-import 'package:flutter_application_2/view/pageHome.dart';
-import 'package:flutter_application_2/view/profile_view.dart';
+import 'package:flutter_application_2/view/home_page_view.dart';
 import 'package:flutter_application_2/view_model/home_view_model.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         //home: ProfileView(),
         //home: HomeView(),
-        home: HomePageView(),
+        home: PageHomeView(),
       ),
     );
   }

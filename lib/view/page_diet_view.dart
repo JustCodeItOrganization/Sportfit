@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/NavMenu.dart';
+import 'package:flutter_application_2/widgets/navigation_menu.dart';
 
 class PageDietView extends StatefulWidget {
   const PageDietView({Key? key}) : super(key: key);

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/NavMenu.dart';
+import 'package:flutter_application_2/widgets/navigation_menu.dart';
 import 'package:flutter_application_2/view/input_module_view.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+class PageHomeView extends StatefulWidget {
+  const PageHomeView({Key? key}) : super(key: key);
 
   @override
   _HomePageViewState createState() => _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<PageHomeView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

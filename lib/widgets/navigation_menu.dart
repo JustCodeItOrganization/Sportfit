@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/home_page_view.dart';
-import 'package:flutter_application_2/view/pageProfile.dart';
-import 'package:flutter_application_2/view/pageDiet.dart';
-import 'package:flutter_application_2/view/pageCardio.dart';
-import 'package:flutter_application_2/view/pageWorkout.dart';
+import 'package:flutter_application_2/view/page_cardio_view.dart';
+import 'package:flutter_application_2/view/page_diet_view.dart';
+import 'package:flutter_application_2/view/page_profile_view.dart';
+import 'package:flutter_application_2/view/page_workout_view.dart';
 import 'package:flutter_application_2/view_model/navMenuPageModel.dart';
-import 'package:flutter_application_2/view/input_module_view.dart';
 
 class NavMenu extends StatelessWidget {
   const NavMenu({super.key});
@@ -37,7 +36,7 @@ class NavMenu extends StatelessWidget {
                   fit: BoxFit.cover)),
         ),
         const NavMenuPage(
-            navMenuPageName: "HomePageView", navMenuPageView: HomePageView()),
+            navMenuPageName: "pageHome", navMenuPageView: PageHomeView()),
         const NavMenuPage(
             navMenuPageName: "pageProfile", navMenuPageView: PageProfileView()),
         const NavMenuPage(

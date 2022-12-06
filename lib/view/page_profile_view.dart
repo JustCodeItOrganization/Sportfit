@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/NavMenu.dart';
+import 'package:flutter_application_2/widgets/navigation_menu.dart';
 import 'package:flutter_application_2/view/profile_view.dart';
 
-class pageProfile extends StatefulWidget {
-  const pageProfile({Key? key}) : super(key: key);
+class PageProfileView extends StatefulWidget {
+  const PageProfileView({Key? key}) : super(key: key);
 
   @override
-  _pageProfileState createState() => _pageProfileState();
+  _PageProfileViewState createState() => _PageProfileViewState();
 }
 
-class _pageProfileState extends State<pageProfile> {
+class _PageProfileViewState extends State<PageProfileView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

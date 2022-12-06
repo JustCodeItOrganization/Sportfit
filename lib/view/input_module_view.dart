@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/pageHome.dart';
+import 'package:flutter_application_2/view/home_page_view.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +49,7 @@ class inputElevatedButton extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     //builder: (context) => const HomeView(),
-                    builder: (context) => const HomePageView(),
+                    builder: (context) => const PageHomeView(),
                   ),
                 )
               }),
