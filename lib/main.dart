@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/home_view.dart';
+import 'package:flutter_application_2/view/pageHome.dart';
 import 'package:flutter_application_2/view_model/home_view_model.dart';
-import 'package:flutter_application_2/view/standard_page_view.dart';
-import 'package:flutter_application_2/view/standard_page_view2.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -26,7 +24,8 @@ class MyApp extends StatelessWidget {
         ),
         //home: HomeView(),
         //home:StandardPage(),
-        home:StandardPageView2(),
+        //home:StandardPageView2(),
+        home:pageHome()
       ),
     );
   }

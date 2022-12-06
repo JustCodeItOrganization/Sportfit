@@ -1,55 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/NavMenu.dart';
 
-class StandardPage extends StatelessWidget {
-  const StandardPage({Key? key}) : super(key: key);
+
+
+
+
+
+
+class pageHome extends StatefulWidget {
+  const pageHome({Key? key}) : super(key: key);
 
   @override
+  _pageHomeState createState() => _pageHomeState();
+}
+
+class _pageHomeState extends State<pageHome> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        bottom: const TabBar(
-          tabs: [
-            Tab(text: "page1"),
-            Tab(text: "page2"),
+    return  DefaultTabController(
+      // length = tab sayisi
+      length: 2,
+      child: Scaffold(
+        drawer: const NavMenu(),
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: "page1"),
+              Tab(text: "page2"),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
+            const pageHomeFirstSectionView(),
+            Container(color: Colors.green),
           ],
         ),
-      ),
-      body: TabBarView(children: [
-        // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-        const StandardPageFirstView(),
-        Container(color: Colors.red),
-      ]),
-      //bottomNavigationBar: BottomNavigationBar(items: const [
-      //  BottomNavigationBarItem(
-      //      icon: Icon(Icons.abc_outlined), label: "LABEL1"),
-      //  BottomNavigationBarItem(
-      //      icon: Icon(Icons.abc_outlined), label: "LABEL2"),
-      //]),
-      bottomNavigationBar: const BottomAppBar(
-        child: TabBar(
-          tabs: [
-            Tab(
-              child: Text(
-                "Page1",
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Page2",
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-          ],
-        ),
+
       ),
     );
   }
 }
+
 
 class StandardPageColor {
   static Color headline5Color = Colors.yellow;
@@ -65,21 +58,9 @@ class HomeButtons extends StatelessWidget {
       margin: const EdgeInsets.only(top: 5),
       child: SizedBox(
         child: ElevatedButton(
-          //style: ButtonStyle(
-          //style: ElevatedButton.styleFrom(
-          //  backgroundColor: Colors.blue,
-          //  padding: const EdgeInsets.all(10),
-          //),
-          //foregroundColor:
-          //MaterialStateProperty.all<Color>(Colors.blue),
-          //),
           style: ElevatedButton.styleFrom(
-              //maximumSize: const Size(50,50),
-              //minimumSize: const Size(25,30),
               ),
           onPressed: () {},
-          //child: SizedBox(
-          //width: 50,
           child: Text(textInButton),
           //),
         ),
@@ -88,8 +69,8 @@ class HomeButtons extends StatelessWidget {
   }
 }
 
-class StandardPageFirstView extends StatelessWidget {
-  const StandardPageFirstView({Key? key}) : super(key: key);
+class pageHomeFirstSectionView extends StatelessWidget {
+  const pageHomeFirstSectionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +96,6 @@ class StandardPageFirstView extends StatelessWidget {
                     color: Colors.grey,
                     spreadRadius: 5,
                     blurRadius: 20,
-                    //offset: Offset(0, 25),
                   ),
                 ]),
           ),
