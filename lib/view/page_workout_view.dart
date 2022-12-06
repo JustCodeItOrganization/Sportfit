@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/input_module_view.dart';
+import 'package:flutter_application_2/view/listModuleExercise.dart';
+import 'package:flutter_application_2/view/profile_view.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
 
 class PageWorkoutView extends StatefulWidget {
@@ -33,8 +36,8 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            Container(color: Colors.white),
-            Container(color: Colors.white),
+            ListModuleExercise(),
+            ProfileView(),
           ],
         ),
       ),

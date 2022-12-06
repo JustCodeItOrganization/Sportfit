@@ -9,20 +9,7 @@ class ListModuleExercise extends StatefulWidget {
 }
 
 class _ListModuleExercise extends State<ListModuleExercise> {
-  List<Item> _data = [];
-
-  _ListModuleExercise() {
-    Item i1 = Item(description: "egzersiz1", title: "egzersiz adi1");
-    _data.add(i1);
-    Item i2 = Item(description: "egzersiz2", title: "egzersiz adi2");
-    _data.add(i2);
-    Item i3 = Item(description: "egzersiz3", title: "egzersiz adi3");
-    _data.add(i3);
-    Item i4 = Item(description: "egzersiz4", title: "egzersiz adi4");
-    _data.add(i4);
-    Item i5 = Item(description: "egzersiz5", title: "egzersiz adi5");
-    _data.add(i5);
-  }
+  List<Item> _data = generateItem(15);
 
   Widget _buildPanel() {
     return ExpansionPanelList(
@@ -41,12 +28,7 @@ class _ListModuleExercise extends State<ListModuleExercise> {
             body: ListTile(
               title: Text(item.description),
               subtitle: Text(item.description),
-              trailing: Icon(Icons.delete),
-              onTap: () {
-                setState(() {
-                  _data.removeWhere((element) => item == element);
-                });
-              },
+              trailing: Icon(Icons.add_circle),
             ));
       }).toList(),
     );
@@ -54,9 +36,6 @@ class _ListModuleExercise extends State<ListModuleExercise> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List"),
-      ),
       body: SingleChildScrollView(
         child: Container(
           child: _buildPanel(),
@@ -80,8 +59,8 @@ class Item {
 List<Item> generateItem(int num) {
   return List.generate(num, (index) {
     return Item(
-        description: "description $index",
-        title: "ITEM $index",
+        description: "Egzersiz açıklaması $index",
+        title: "Egzersiz adı $index",
         isExpanded: false);
   });
 }
