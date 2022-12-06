@@ -46,10 +46,7 @@ class _TimerView extends State<TimerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("timer"),
-      ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +71,7 @@ class _TimerView extends State<TimerView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ButtonWidget(
-                text: isRunning ? 'Pause' : 'Resume',
+                text: isRunning ? 'Durdur' : 'Devam Ettir',
                 onClicked: () {
                   if (isRunning) {
                     stopTimer(reset: false);
@@ -87,13 +84,13 @@ class _TimerView extends State<TimerView> {
                 width: 12,
               ),
               ButtonWidget(
-                text: 'Cancel',
+                text: 'İptal Et',
                 onClicked: stopTimer,
               )
             ],
           )
         : ButtonWidget(
-            text: "Start timer",
+            text: "Başlat",
             color: Colors.black,
             backgroundColor: Colors.white,
             onClicked: () {
