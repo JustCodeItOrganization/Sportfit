@@ -9,20 +9,7 @@ class ListModuleFood extends StatefulWidget {
 }
 
 class _ListModuleFood extends State<ListModuleFood> {
-  List<Item> _data = [];
-
-  _ListModuleFood() {
-    Item i1 = Item(description: "yemek1", title: "yemek adi1");
-    _data.add(i1);
-    Item i2 = Item(description: "yemek2", title: "yemek adi2");
-    _data.add(i2);
-    Item i3 = Item(description: "yemek3", title: "yemek adi3");
-    _data.add(i3);
-    Item i4 = Item(description: "yemek4", title: "yemek adi4");
-    _data.add(i4);
-    Item i5 = Item(description: "yemek5", title: "yemek adi5");
-    _data.add(i5);
-  }
+  List<Item> _data = generateItem(15);
 
   Widget _buildPanel() {
     return ExpansionPanelList(
@@ -41,12 +28,7 @@ class _ListModuleFood extends State<ListModuleFood> {
             body: ListTile(
               title: Text(item.description),
               subtitle: Text(item.description),
-              trailing: Icon(Icons.delete),
-              onTap: () {
-                setState(() {
-                  _data.removeWhere((element) => item == element);
-                });
-              },
+              trailing: Icon(Icons.add_circle),
             ));
       }).toList(),
     );
@@ -54,9 +36,6 @@ class _ListModuleFood extends State<ListModuleFood> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("List"),
-      ),
       body: SingleChildScrollView(
         child: Container(
           child: _buildPanel(),
@@ -80,8 +59,8 @@ class Item {
 List<Item> generateItem(int num) {
   return List.generate(num, (index) {
     return Item(
-        description: "description $index",
-        title: "ITEM $index",
+        description: "YEMEK ACIKLAMASI $index",
+        title: "YEMEK $index",
         isExpanded: false);
   });
 }
