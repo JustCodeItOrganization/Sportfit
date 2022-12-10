@@ -8,8 +8,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Column(
         children: [
           Accordion(
             children: [
@@ -82,8 +81,7 @@ class ProfileView extends StatelessWidget {
             isEnabled: false,
           ),
         ],
-      ),
-    );
+      );
   }
 
   List<String> get dropDownMenuItems => ["Male", "Female"];
