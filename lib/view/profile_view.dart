@@ -1,47 +1,41 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
 import 'package:flutter_application_2/view/input_module_view.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import './profile_storage.dart';
 
-class Profile {
-  final String weight;
-  final String height;
 
-  Profile(this.weight, this.height);
 
-  Profile.fromJson(Map<String, dynamic> json): weight = json['weight'], height = json['height'];
-
-  Map<String, dynamic> toJson() => {
-    'weight' : weight,
-    'height' : height,
-  };
-}
-
-class ProfileStorage{
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-
-    return directory.path;
-  }
-
-  Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/data.json');
-  }
-
-}
-
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget{
   const ProfileView({super.key});
+  @override
+  _ProfileViewState createState() => _ProfileViewState();
+}
+
+
+
+class _ProfileViewState extends State<ProfileView> {
+  late int weight;
+  late int height;
+  void getProfileFromStorage() async{
+    Profile profile = await Profile().readProfileFromStorage();
+    setState(() {
+      weight = profile.weight;
+      height = profile.height;
+    });
+  }
+
+  _ProfileViewState(){
+    getProfileFromStorage();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Column(
         children: [
+          Row(children: [Text(weight.toString()), Text(height.toString())]),
           Accordion(
             children: [
               AccordionSection(
@@ -112,7 +106,7 @@ class ProfileView extends StatelessWidget {
             labelText: 'Fitness Level Output',
             isEnabled: false,
           ),
-        ],
+          ],
       );
   }
 
