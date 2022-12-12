@@ -130,9 +130,9 @@ Map running_mets(){
 }
 
 
-double weight_lifting_calorie(double body_weight){
+double weight_lifting_calorie(double body_weight, double minute){
   double met = 3.5;
-  return exercise_calorie(met = met, body_weight = body_weight);
+  return minute * exercise_calorie(met = met, body_weight = body_weight);
 }
 
 double cardio_calorie(double mph, bool activity, double body_weight, double minute){
