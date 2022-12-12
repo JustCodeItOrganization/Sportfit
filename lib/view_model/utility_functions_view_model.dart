@@ -95,4 +95,55 @@ double workout_calorie(bool gender, double weight, double time){
   return time * calorieRatio * genderRatio;
    
 }
-  
+double exercise_calorie(double met, double body_weight){
+  return met * 3.5 * body_weight / 200.0;
+}
+Map bicycling_mets(){
+  //mph: met
+  return {
+    //mph:met
+    0.0:4,
+    10.0:6,
+    12.0:8,
+    14.0:10,
+    16.0:12,
+    20.0:16
+  };
+}
+
+Map running_mets(){
+  //mph:met
+  return {
+   0.0  :6.0, 
+   5.0  :8.0,	      
+	 5.2  :9.0,      
+	 6.0  :10.0,	   
+	 6.7  :11.0,	  
+	 7.0  :11.5,	  
+	 7.5  :12.5,	
+	 8.0  :13.5,	  
+	 8.6  :14.0,	  
+	 9.0  :15.0,	    
+	 10.0 :16.0,	  
+	 10.9 :18.0
+   };	 
+}
+
+
+double weight_lifting_calorie(double body_weight){
+  double met = 3.5;
+  return exercise_calorie(met = met, body_weight = body_weight);
+}
+
+double cardio_calorie(double mph, bool activity, double body_weight, double minute){
+  // activity == true  -> running
+  // activity == false -> bicycling
+  Map map_met;
+  double met = 0;
+  if (activity) map_met = running_mets();
+  else map_met = bicycling_mets();
+  for (MapEntry e in map_met.entries){
+    if (mph >= map_met[e]) met = map_met[e];
+  }
+  return minute * exercise_calorie(met, body_weight);
+}
