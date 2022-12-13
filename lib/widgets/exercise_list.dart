@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
-
-List names = [
-  "Deadlift",
-  "Squat",
-  "Row",
-  "BenchPress",
-  "Deadlift",
-  "Squat",
-  "Row",
-  "BenchPress"
-];
-List sets = ["5", "6", "8", "3", "5", "6", "8", "3"];
-List keys = ["1", "2", "3", "4", "5", "6", "7", "8"];
+import 'package:flutter_application_2/view/exercise.dart';
 
 class ExerciseList extends StatefulWidget {
   @override
@@ -19,6 +7,91 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseListState extends State<ExerciseList> {
+  List<Exercise> _data = [];
+
+  _ExerciseListState() {
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Deadlift",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Squat",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 3),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Row",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Push up",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Pull up",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Walking high knees",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Knee push ups",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+    _data.add(
+      Exercise(
+          description: "description",
+          title: "Jumping jacks",
+          videoUrl: "www.",
+          imagePath:
+              "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+          metabolicEquivalent: 5,
+          numOfSets: 4),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +99,18 @@ class _ExerciseListState extends State<ExerciseList> {
       children: <Widget>[
         Expanded(
           child: ListView.builder(
-            itemCount: 8,
+            itemCount: _data.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) => Container(
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
               child: Dismissible(
-                key: ValueKey(keys[index]),
+                key: Key(_data[index].title),
                 onDismissed: (direction) {
-                  keys.removeAt(index);
+                  setState(() {
+                    _data.removeAt(index);
+                    print(_data);
+                  });
                 },
                 child: Card(
                   elevation: 5.0,
@@ -44,8 +120,7 @@ class _ExerciseListState extends State<ExerciseList> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       image: DecorationImage(
-                        image: NetworkImage(
-                            "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80"),
+                        image: NetworkImage(_data[index].imagePath),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -72,13 +147,13 @@ class _ExerciseListState extends State<ExerciseList> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(names[index],
+                                  Text(_data[index].title,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 24.0,
                                           fontWeight: FontWeight.w800)),
                                   Text(
-                                    sets[index],
+                                    _data[index].numOfSets.toString(),
                                     style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16.0,
@@ -137,4 +212,18 @@ class _ExerciseListState extends State<ExerciseList> {
       ],
     ));
   }
+}
+
+List<Exercise> generateItem(int num) {
+  return List.generate(num, (index) {
+    return Exercise(
+        description: "Egzersiz açıklaması $index",
+        metabolicEquivalent: 5,
+        numOfSets: 3,
+        videoUrl: "www.",
+        imagePath:
+            "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+        title: "Egzersiz adı $index",
+        isExpanded: false);
+  });
 }
