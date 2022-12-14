@@ -95,122 +95,133 @@ class _ExerciseListState extends State<ExerciseList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: new FloatingActionButton(
+            shape: RoundedRectangleBorder(),
+            elevation: 0.0,
+            child: new Icon(Icons.add),
+            onPressed: () {}
+            ),
         body: Column(
-      children: <Widget>[
-        Expanded(
-          child: ListView.builder(
-            itemCount: _data.length,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) => Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-              child: Dismissible(
-                key: Key(_data[index].title),
-                onDismissed: (direction) {
+          children: <Widget>[
+            Expanded(
+              child: ReorderableListView.builder(
+                buildDefaultDragHandles: false,
+                onReorder: (oldIndex, newIndex) {
                   setState(() {
-                    _data.removeAt(index);
-                    print(_data);
+                    final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
+
+                    final reorderData = _data.removeAt(oldIndex);
+                    _data.insert(index, reorderData);
                   });
                 },
-                child: Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
+                itemCount: _data.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) =>
+                    ReorderableDragStartListener(
+                  key: Key(_data[index].title),
+                  index: index,
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        image: NetworkImage(_data[index].imagePath),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [Colors.black, Colors.black.withOpacity(0.3)],
-                        ),
-                      ),
-                      height: 150,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(_data[index].title,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24.0,
-                                          fontWeight: FontWeight.w800)),
-                                  Text(
-                                    _data[index].numOfSets.toString(),
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 10.0),
-                            child: TextButton(
-                              onPressed: () {},
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 28),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  foregroundColor: Colors.red,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 59, 59, 59)),
-                              child: Icon(
-                                Icons.ondemand_video,
-                                size: 20,
-                              ),
+                    width: MediaQuery.of(context).size.width,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: Dismissible(
+                      key: Key(_data[index].title),
+                      onDismissed: (direction) {
+                        setState(() {
+                          _data.removeAt(index);
+                          print(_data);
+                        });
+                      },
+                      child: Card(
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: NetworkImage(_data[index].imagePath),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0.3)
+                                ],
+                              ),
+                            ),
+                            height: 150,
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(_data[index].title,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 24.0,
+                                                fontWeight: FontWeight.w800)),
+                                        Text(
+                                          _data[index].numOfSets.toString(),
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 10.0),
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 28),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0)),
+                                        foregroundColor: Colors.red,
+                                        backgroundColor:
+                                            Color.fromARGB(255, 59, 59, 59)),
+                                    child: Icon(
+                                      Icons.ondemand_video,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Add New Workout",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold))
-            ],
-          ),
-        ),
-      ],
-    ));
+          ],
+        ));
   }
 }
 
