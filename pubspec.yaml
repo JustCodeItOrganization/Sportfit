@@ -44,6 +44,7 @@ dependencies:
   accordion: ^2.5.1
   google_fonts: ^3.0.1
   localstorage: ^4.0.0+1
+  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:

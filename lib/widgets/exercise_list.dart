@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/exercise.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class ExerciseList extends StatefulWidget {
   @override
@@ -7,6 +8,8 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseListState extends State<ExerciseList> {
+  int _setValue = 1;
+  int _repValue = 1;
   List<Exercise> _data = [];
 
   _ExerciseListState() {
@@ -96,12 +99,111 @@ class _ExerciseListState extends State<ExerciseList> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: new FloatingActionButton(
-            shape: RoundedRectangleBorder(),
-            elevation: 0.0,
-            child: new Icon(Icons.add),
-            onPressed: () {}
-            ),
+        floatingActionButton: FloatingActionButton(
+          shape: RoundedRectangleBorder(),
+          elevation: 0.0,
+          child: new Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setModalState) {
+                    return Container(
+                      height: 400,
+                      padding: EdgeInsets.all(0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 15,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                ),
+                                alignment: Alignment.center,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                    color: Color(0xfffffffff),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.grey.shade200,
+                                    )),
+                              ),
+                              Container(
+                                child: NumberPicker(
+                                  axis: Axis.horizontal,
+                                  itemHeight: 45,
+                                  itemWidth: 45,
+                                  itemCount: 7,
+                                  value: _setValue,
+                                  minValue: 1,
+                                  maxValue: 20,
+                                  onChanged: (value) {
+                                    setModalState(() {
+                                      _setValue = value;
+                                    });
+                                    print(_setValue);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 15,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                ),
+                                alignment: Alignment.center,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                    color: Color(0xfffffffff),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.grey.shade200,
+                                    )),
+                              ),
+                              Container(
+                                child: NumberPicker(
+                                  axis: Axis.horizontal,
+                                  itemHeight: 45,
+                                  itemWidth: 45,
+                                  itemCount: 7,
+                                  value: _repValue,
+                                  minValue: 1,
+                                  maxValue: 100,
+                                  onChanged: (value) {
+                                    setModalState(() {
+                                      _repValue = value;
+                                    });
+                                    print(_repValue);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
+        ),
         body: Column(
           children: <Widget>[
             Expanded(
