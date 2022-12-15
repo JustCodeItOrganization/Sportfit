@@ -8,6 +8,8 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseListState extends State<ExerciseList> {
+  final List _exerciseList = ["Bench", "Squat", "NEW"];
+  String _exerciseName = "Bench";
   int _setValue = 1;
   int _repValue = 1;
   List<Exercise> _data = [];
@@ -15,6 +17,7 @@ class _ExerciseListState extends State<ExerciseList> {
   _ExerciseListState() {
     _data.add(
       Exercise(
+          id: "1",
           description: "description",
           title: "Deadlift",
           videoUrl: "www.",
@@ -25,6 +28,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "2",
           description: "description",
           title: "Squat",
           videoUrl: "www.",
@@ -35,6 +39,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "3",
           description: "description",
           title: "Row",
           videoUrl: "www.",
@@ -45,6 +50,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "4",
           description: "description",
           title: "Push up",
           videoUrl: "www.",
@@ -55,6 +61,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "5",
           description: "description",
           title: "Pull up",
           videoUrl: "www.",
@@ -65,6 +72,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "6",
           description: "description",
           title: "Walking high knees",
           videoUrl: "www.",
@@ -75,6 +83,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "7",
           description: "description",
           title: "Knee push ups",
           videoUrl: "www.",
@@ -85,6 +94,7 @@ class _ExerciseListState extends State<ExerciseList> {
     );
     _data.add(
       Exercise(
+          id: "8",
           description: "description",
           title: "Jumping jacks",
           videoUrl: "www.",
@@ -98,6 +108,7 @@ class _ExerciseListState extends State<ExerciseList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: UniqueKey(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           shape: RoundedRectangleBorder(),
@@ -150,7 +161,6 @@ class _ExerciseListState extends State<ExerciseList> {
                                     setModalState(() {
                                       _setValue = value;
                                     });
-                                    print(_setValue);
                                   },
                                 ),
                               ),
@@ -189,12 +199,43 @@ class _ExerciseListState extends State<ExerciseList> {
                                     setModalState(() {
                                       _repValue = value;
                                     });
-                                    print(_repValue);
                                   },
                                 ),
                               ),
                             ],
                           ),
+                          DropdownButton(
+                            items: _exerciseList
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            value: _exerciseName,
+                            onChanged: (value) {
+                              setModalState(() {
+                                _exerciseName = value as String;
+                              });
+                              print(_exerciseName);
+                            },
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                print(_data.length);
+                                setState(() {
+                                  _data.add(Exercise(
+                                      id : UniqueKey().toString(),
+                                      description: "description",
+                                      title: _exerciseName,
+                                      videoUrl: "www.",
+                                      imagePath:
+                                          "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+                                      metabolicEquivalent: _repValue,
+                                      numOfSets: _setValue));
+                                });
+                                print(_data.length);
+                              },
+                              child: Text("BAS")),
                         ],
                       ),
                     );
@@ -221,14 +262,14 @@ class _ExerciseListState extends State<ExerciseList> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) =>
                     ReorderableDragStartListener(
-                  key: Key(_data[index].title),
+                  key: Key(_data[index].id.toString()),
                   index: index,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: Dismissible(
-                      key: Key(_data[index].title),
+                      key: Key(_data[index].id.toString()),
                       onDismissed: (direction) {
                         setState(() {
                           _data.removeAt(index);
@@ -327,6 +368,7 @@ class _ExerciseListState extends State<ExerciseList> {
   }
 }
 
+/*
 List<Exercise> generateItem(int num) {
   return List.generate(num, (index) {
     return Exercise(
@@ -340,3 +382,4 @@ List<Exercise> generateItem(int num) {
         isExpanded: false);
   });
 }
+*/

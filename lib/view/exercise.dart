@@ -1,4 +1,5 @@
 class Exercise {
+  String id;
   String title;
   String description;
   bool isExpanded;
@@ -8,6 +9,7 @@ class Exercise {
   int numOfSets;
 
   Exercise({
+    required this.id,
     required this.description,
     required this.title,
     required this.videoUrl,
