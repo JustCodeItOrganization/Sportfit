@@ -7,6 +7,7 @@ class Exercise {
   String imagePath;
   int metabolicEquivalent;
   int numOfSets;
+  bool isCompleted;
 
   Exercise({
     required this.id,
@@ -17,5 +18,6 @@ class Exercise {
     required this.metabolicEquivalent,
     required this.numOfSets,
     this.isExpanded = false,
+    this.isCompleted = false,
   });
 }

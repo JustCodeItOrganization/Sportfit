@@ -224,7 +224,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                 print(_data.length);
                                 setState(() {
                                   _data.add(Exercise(
-                                      id : UniqueKey().toString(),
+                                      id: UniqueKey().toString(),
                                       description: "description",
                                       title: _exerciseName,
                                       videoUrl: "www.",
@@ -337,14 +337,22 @@ class _ExerciseListState extends State<ExerciseList> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 10.0),
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      setState(() {
+                                        _data[index].isCompleted =
+                                            !_data[index].isCompleted;
+                                      });
+                                    },
                                     style: TextButton.styleFrom(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 28),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20.0)),
-                                        foregroundColor: Colors.red,
+                                        foregroundColor:
+                                            (_data[index].isCompleted == false)
+                                                ? Colors.red
+                                                : Colors.green,
                                         backgroundColor:
                                             Color.fromARGB(255, 59, 59, 59)),
                                     child: Icon(
