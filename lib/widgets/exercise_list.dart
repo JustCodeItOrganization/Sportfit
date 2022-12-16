@@ -13,7 +13,8 @@ class _ExerciseListState extends State<ExerciseList> {
   int _setValue = 1;
   int _repValue = 1;
   List<Exercise> _data = [];
-
+  double totalCal = 0;
+  double completedCal = 0;
   _ExerciseListState() {
     _data.add(
       Exercise(
@@ -103,6 +104,7 @@ class _ExerciseListState extends State<ExerciseList> {
           metabolicEquivalent: 5,
           numOfSets: 4),
     );
+    totalCal = calculateTotalCal(_data, 70);
   }
 
   @override
@@ -233,7 +235,8 @@ class _ExerciseListState extends State<ExerciseList> {
                                       metabolicEquivalent: _repValue,
                                       numOfSets: _setValue));
                                 });
-                                print(_data.length);
+                                totalCal = calculateTotalCal(_data, 70);
+                                print(totalCal);
                               },
                               child: Text("BAS")),
                         ],
@@ -273,7 +276,8 @@ class _ExerciseListState extends State<ExerciseList> {
                       onDismissed: (direction) {
                         setState(() {
                           _data.removeAt(index);
-                          print(_data);
+                          totalCal = calculateTotalCal(_data, 70);
+                          print(totalCal);
                         });
                       },
                       child: Card(
@@ -341,6 +345,9 @@ class _ExerciseListState extends State<ExerciseList> {
                                       setState(() {
                                         _data[index].isCompleted =
                                             !_data[index].isCompleted;
+                                        completedCal =
+                                            calculateCompletedCal(_data, 70);
+                                        print(completedCal);
                                       });
                                     },
                                     style: TextButton.styleFrom(
@@ -374,6 +381,34 @@ class _ExerciseListState extends State<ExerciseList> {
           ],
         ));
   }
+}
+
+// kcal/dakika   dakikada harcanan kcal
+double calculateCal(int met, int weigth) {
+  return (met * (3.5) * weigth) / 200;
+}
+
+// 1 setin 45 saniye olduğu varsayılarak hesaplanmıştır. Exercise classına 1 set için gerekli süre eklenerek düzeltilebilir.
+double calculateTotalCal(List<Exercise> data, int weigth) {
+  double cal = 0;
+  for (int i = 0; i < data.length; i++) {
+    cal += calculateCal(data[i].metabolicEquivalent, weigth) *
+        data[i].numOfSets *
+        (3 / 4);
+  }
+  return cal;
+}
+
+double calculateCompletedCal(List<Exercise> data, int weigth) {
+  double cal = 0;
+  for (int i = 0; i < data.length; i++) {
+    if (data[i].isCompleted == true) {
+      cal += calculateCal(data[i].metabolicEquivalent, weigth) *
+          data[i].numOfSets *
+          (3 / 4);
+    }
+  }
+  return cal;
 }
 
 /*
