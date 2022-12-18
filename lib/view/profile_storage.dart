@@ -5,8 +5,8 @@ import 'dart:async';
 import 'dart:io';
 
 class Profile extends ChangeNotifier{
-   int weight;
-   int height;
+   double weight;
+   double height;
    int age;
    int fitnessLevel;
 
@@ -21,8 +21,8 @@ class Profile extends ChangeNotifier{
     return Profile(0, 0, 0, 0);
   }
 
-  Profile.fromMap(Map<String, Object?> map): weight = int.parse(map['weight'].toString()),
-        height = int.parse(map['height'].toString()), age = int.parse(map['age'].toString()),
+  Profile.fromMap(Map<String, Object?> map): weight = double.parse(map['weight'].toString()),
+        height = double.parse(map['height'].toString()), age = int.parse(map['age'].toString()),
         fitnessLevel = int.parse(map['fitnessLevel'].toString());
 
   Map<String, Object?> toMap() => {

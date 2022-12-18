@@ -18,8 +18,8 @@ class ProfileView extends StatefulWidget{
 
 
 class _ProfileViewState extends State<ProfileView> {
-  int weight = 0;
-  int height = 0;
+  double weight = 0;
+  double height = 0;
   int age = 0;
   int fitnessLevel = 0;
   String gender = 'Erkek';
@@ -81,8 +81,8 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     ElevatedButton(onPressed: (){
                       setState(() {
-                        weight = int.parse(_weightTextController.text);
-                        height = int.parse(_heightTextController.text);
+                        weight = double.parse(_weightTextController.text);
+                        height = double.parse(_heightTextController.text);
                         age = int.parse(_ageTextController.text);
                       });
                     }, child: Text('Verileri kaydet'))
