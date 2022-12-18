@@ -5,23 +5,31 @@ import 'dart:async';
 import 'dart:io';
 
 class Profile extends ChangeNotifier{
-  late int weight;
-  late int height;
+   int weight;
+   int height;
+   int age;
+   int fitnessLevel;
 
-  Profile(){
+  Profile(this.weight, this.height, this.age, this.fitnessLevel){
     weight = 0;
     height = 0;
+    age = 0;
+    fitnessLevel = 0;
   }
 
-  Future<Profile> readProfileFromStorage() {
-    return ProfileStorage().readProfileFromStorage();
+  static Future<Profile> readProfileFromStorage() async {
+    return Profile(0, 0, 0, 0);
   }
 
-  Profile.fromJson(Map<String, dynamic> json): weight = json['weight'], height = json['height'];
+  Profile.fromMap(Map<String, Object?> map): weight = int.parse(map['weight'].toString()),
+        height = int.parse(map['height'].toString()), age = int.parse(map['age'].toString()),
+        fitnessLevel = int.parse(map['fitnessLevel'].toString());
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toMap() => {
     'weight' : weight,
     'height' : height,
+    'fitnessLevel': fitnessLevel,
+    'age': age,
   };
 }
 
@@ -48,10 +56,10 @@ class ProfileStorage{
       final file = await _localFile;
       final contents = await file.readAsString();
       Map<String, dynamic> profileMap = jsonDecode(contents);
-      Profile profile = Profile.fromJson(profileMap);
+      Profile profile = Profile.fromMap(profileMap);
       return profile;
     } catch (e) {
-      return Profile();
+      return Profile(0, 0, 0, 0);
     }
   }
 }
