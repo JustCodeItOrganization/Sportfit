@@ -16,8 +16,11 @@ class ProfileView extends StatefulWidget{
 
 
 class _ProfileViewState extends State<ProfileView> {
-  late int weight;
-  late int height;
+  int weight = 0;
+  int height = 0;
+  final _weightTextController = TextEditingController();
+  final _heightTextController = TextEditingController();
+  final _ageTextController = TextEditingController();
   void getProfileFromStorage() async{
     Profile profile = await Profile().readProfileFromStorage();
     setState(() {
@@ -30,7 +33,6 @@ class _ProfileViewState extends State<ProfileView> {
     getProfileFromStorage();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,19 +41,28 @@ class _ProfileViewState extends State<ProfileView> {
           Accordion(
             children: [
               AccordionSection(
-                header: Text('Vücut  özellikleri'),
+                header:const Text('Vücut  özellikleri'),
                 content: Column(
                   children: [
-                    const InputTextField(
-                      labelText: 'Ağırlık(kg)',
+                    TextField(
+                      controller: _weightTextController,
+                      decoration:const InputDecoration(
+                        hintText: 'Ağırlık(kg)',
+                      )
+
                     ),
-                    const InputTextField(labelText: 'Uzunluk(cm)'),
-                    const InputTextField(labelText: 'Yaş'),
+                    TextField(controller: _heightTextController,decoration: InputDecoration(hintText: 'Uzunluk(cm)')),
+                    TextField(controller: _ageTextController,decoration: InputDecoration(hintText: 'Yaş')),
                     DropDownMenu(
                         items: dropDownMenuItems,
                         onChangedCallBack: (String) => {},
                         currentItem: "Male"),
-                    const inputElevatedButton()
+                    ElevatedButton(onPressed: (){
+                      setState(() {
+                        weight = int.parse(_weightTextController.text);
+                        height = int.parse(_heightTextController.text);
+                      });
+                    }, child: Text('Verileri kaydet'))
                   ],
                 ),
               ),
@@ -109,6 +120,5 @@ class _ProfileViewState extends State<ProfileView> {
           ],
       );
   }
-
   List<String> get dropDownMenuItems => ["Male", "Female"];
 }
