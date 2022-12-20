@@ -18,7 +18,7 @@ class Profile extends ChangeNotifier{
   }
 
   static Future<Profile> readProfileFromStorage() async {
-    return Profile(0, 0, 0, 0);
+    return Profile(20.0, 0, 0, 1);
   }
 
   Profile.fromMap(Map<String, Object?> map): weight = double.parse(map['weight'].toString()),

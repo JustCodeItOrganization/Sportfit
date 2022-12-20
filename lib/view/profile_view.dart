@@ -21,11 +21,15 @@ class _ProfileViewState extends State<ProfileView> {
   double weight = 0;
   double height = 0;
   int age = 0;
-  int fitnessLevel = 0;
+  int fitnessLevel = 1;
+  String selectedGender = 'Erkek';
   String gender = 'Erkek';
   final _weightTextController = TextEditingController();
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
+  List<String> genderSelectionItems = ["Erkek", "Kadın"];
+  List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
+
   void getProfileFromStorage() async{
     Profile profile = await Profile.readProfileFromStorage();
     setState(() {
@@ -50,6 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
                   StyledText('Ağırlık:${weight.toString()}'),
                   StyledText('Uzunluk:${height.toString()}')])]),
           Row(children: [StyledText('Cinsiyet:${gender.toString()}'), StyledText('Yaş:${age.toString()}')],),
+          Row(children: [StyledText('Fitness Level:${fitnessLevel.toString()}')],),
           Accordion(
             children: [
               AccordionSection(
@@ -65,7 +70,7 @@ class _ProfileViewState extends State<ProfileView> {
                     TextField(controller: _heightTextController,decoration: InputDecoration(hintText: 'Uzunluk(cm)')),
                     TextField(controller: _ageTextController,decoration: InputDecoration(hintText: 'Yaş')),
                     DropDownMenu(
-                        items: dropDownMenuItems,
+                        items: genderSelectionItems,
                         onChangedCallBack: (selected) => {setState(() {
                           String value;
                           if(selected == null){
@@ -74,9 +79,9 @@ class _ProfileViewState extends State<ProfileView> {
                           else{
                             value = selected;
                           }
-                              gender = value;
+                              selectedGender = value;
                         })},
-                        currentItem: "Erkek",
+                        currentItem: selectedGender,
 
                     ),
                     ElevatedButton(onPressed: (){
@@ -84,53 +89,28 @@ class _ProfileViewState extends State<ProfileView> {
                         weight = double.parse(_weightTextController.text);
                         height = double.parse(_heightTextController.text);
                         age = int.parse(_ageTextController.text);
+                        gender = selectedGender;
                       });
                     }, child: Text('Verileri kaydet'))
                   ],
                 ),
               ),
               AccordionSection(
-                header: Text('Hedef Kalori'),
+                header: Text('Fitness Level'),
                 content: Column(
                   children: [
-                    const InputTextField(
-                      labelText: 'Hedef Kalori (kcal)',
-                    ),
-                    const inputElevatedButton()
-                  ],
-                ),
-              ),
-              AccordionSection(
-                header: Text('Antrenman Hacmi'),
-                content: Column(
-                  children: [
-                    const InputTextField(
-                      labelText: 'Set',
-                    ),
-                    const InputTextField(
-                      labelText: 'Tekrar',
-                    ),
-                    const InputTextField(
-                      labelText: 'Ağırlık (kg)',
-                    ),
-                    const inputElevatedButton()
-                  ],
-                ),
-              ),
-              AccordionSection(
-                header: Text('Fitness Leveli'),
-                content: Column(
-                  children: [
-                    const InputTextField(
-                      labelText: 'Set',
-                    ),
-                    const InputTextField(
-                      labelText: 'Tekrar',
-                    ),
-                    const InputTextField(
-                      labelText: 'Ağırlık (kg)',
-                    ),
-                    const inputElevatedButton()
+                    DropDownMenu(items: fitnessLevelSelectionItems, onChangedCallBack: (selected) {
+                      String value = '';
+                      if(selected == null){
+                        value = '1';
+                      }
+                      else{
+                        value = selected;
+                      }
+                      setState(() {
+                        fitnessLevel = int.parse(value);
+                      });
+                    }, currentItem: fitnessLevel.toString()),
                   ],
                 ),
               ),
@@ -139,5 +119,4 @@ class _ProfileViewState extends State<ProfileView> {
           ],
       );
   }
-  List<String> get dropDownMenuItems => ["Erkek", "Kadın"];
 }
