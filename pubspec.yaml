@@ -43,6 +43,7 @@ dependencies:
   get: ^4.6.5
   accordion: ^2.5.1
   google_fonts: ^3.0.1
+  sqflite: ^2.2.2
 
 dev_dependencies:
   flutter_test:
