@@ -22,6 +22,7 @@ class _ProfileViewState extends State<ProfileView> {
   String selectedGender = 'Erkek';
   String gender = 'Erkek';
   bool isProfileFetched = false;
+  final _formKey = GlobalKey<FormState>();
   final _weightTextController = TextEditingController();
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
@@ -82,25 +83,62 @@ class _ProfileViewState extends State<ProfileView> {
                           StyledText('Fitness Level:${fitnessLevel.toString()}')
                         ],
                       ),
-                      Accordion(
+                      Form (key: _formKey, child:Accordion(
                         children: [
                           AccordionSection(
                             header: const Text('Vücut özellikleri'),
                             content: Column(
                               children: [
-                                TextField(
-                                    controller: _weightTextController,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Ağırlık(kg)',
-                                    )),
-                                TextField(
+                                TextFormField(
+                                  controller: _weightTextController,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Ağırlık(kg)',
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Ağırlık boş olamaz';
+                                    }
+
+                                    try{
+                                      double.parse(value);
+                                    }
+                                    on FormatException{
+                                      return 'Lütfen geçerli bir ağırlık giriniz';
+                                    }
+                                  },
+                                ),
+                                TextFormField(
                                     controller: _heightTextController,
                                     decoration: InputDecoration(
-                                        hintText: 'Uzunluk(cm)')),
-                                TextField(
+                                        hintText: 'Uzunluk(cm)'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Uzunluk boş olamaz';
+                                      }
+
+                                      try{
+                                        double.parse(value);
+                                      }
+                                      on FormatException{
+                                        return 'Lütfen geçerli bir uzunluk giriniz';
+                                      }
+                                    }),
+                                TextFormField(
                                     controller: _ageTextController,
                                     decoration:
-                                        InputDecoration(hintText: 'Yaş')),
+                                        InputDecoration(hintText: 'Yaş'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Yaş boş olamaz';
+                                      }
+
+                                      try{
+                                        int.parse(value);
+                                      }
+                                      on FormatException{
+                                        return 'Lütfen geçerli bir yaş giriniz';
+                                      }
+                                    }),
                                 DropDownMenu(
                                   items: genderSelectionItems,
                                   onChangedCallBack: (selected) => {
@@ -118,6 +156,11 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
+                                      if(_formKey.currentState!.validate()){
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Kaydedildi')),
+                                        );
+                                      }
                                       setState(() {
                                         weight = double.parse(
                                             _weightTextController.text);
@@ -154,6 +197,7 @@ class _ProfileViewState extends State<ProfileView> {
                             ),
                           ),
                         ],
+                      )
                       ),
                     ]);
                   } else if (snapshot.hasError) {
