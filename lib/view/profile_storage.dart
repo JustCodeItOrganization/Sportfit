@@ -8,28 +8,25 @@ class Profile extends ChangeNotifier{
    double weight;
    double height;
    int age;
-   int fitnessLevel;
+   String fitnessLevel;
+   String gender;
 
-  Profile(this.weight, this.height, this.age, this.fitnessLevel){
-    weight = 0;
-    height = 0;
-    age = 0;
-    fitnessLevel = 0;
-  }
+  Profile(this.weight, this.height, this.age, this.fitnessLevel, this.gender);
 
   static Future<Profile> readProfileFromStorage() async {
-    return Profile(20.0, 0, 0, 1);
+    return Profile(20.0, 0, 0, '1', 'Erkek');
   }
 
   Profile.fromMap(Map<String, Object?> map): weight = double.parse(map['weight'].toString()),
         height = double.parse(map['height'].toString()), age = int.parse(map['age'].toString()),
-        fitnessLevel = int.parse(map['fitnessLevel'].toString());
+        fitnessLevel = map['fitnessLevel'].toString(), gender = map['gender'].toString();
 
   Map<String, Object?> toMap() => {
     'weight' : weight,
     'height' : height,
     'fitnessLevel': fitnessLevel,
     'age': age,
+    'gender': gender,
   };
 }
 
@@ -51,15 +48,4 @@ class ProfileStorage{
     return file.writeAsString(json);
   }
 
-  Future<Profile> readProfileFromStorage() async {
-    try {
-      final file = await _localFile;
-      final contents = await file.readAsString();
-      Map<String, dynamic> profileMap = jsonDecode(contents);
-      Profile profile = Profile.fromMap(profileMap);
-      return profile;
-    } catch (e) {
-      return Profile(0, 0, 0, 0);
-    }
-  }
 }
