@@ -1,27 +1,28 @@
-double basal_metabolism(bool gender, int age, double weight, double length){
-  //length is cm
-  //weight is kg
-  
-  double initConst;
-  double weightMultiplier;
-  double lengthMultiplier;
-  double ageMultiplier;
+//double basal_metabolism(bool gender, int age, double weight, double length){
+//  //length is cm
+//  //weight is kg
+//  
+//  double initConst;
+//  double weightMultiplier;
+//  double lengthMultiplier;
+//  double ageMultiplier;
+//
+//  if (gender){
+//  initConst = 66.5;
+//  weightMultiplier = 13.75;
+//  lengthMultiplier = 5;
+//  ageMultiplier = 6.77;
+//  }
+//  else{
+//  initConst = 665.1;
+//  weightMultiplier = 9.56;
+//  lengthMultiplier = 1.85;
+//  ageMultiplier = 4.67; 
+//  }
+//  return initConst + (weightMultiplier * weight) + (lengthMultiplier * length) - (ageMultiplier*age);
+//}
 
-  if (gender){
-  initConst = 66.5;
-  weightMultiplier = 13.75;
-  lengthMultiplier = 5;
-  ageMultiplier = 6.77;
-  }
-  else{
-  initConst = 665.1;
-  weightMultiplier = 9.56;
-  lengthMultiplier = 1.85;
-  ageMultiplier = 4.67; 
-  }
-  return initConst + (weightMultiplier * weight) + (lengthMultiplier * length) - (ageMultiplier*age);
-}
-
+// new basal metabolism function:
 double rmr_calculation(bool gender, int age, double weight, double height){
   // centimeter for lenght
   // kg for weight
@@ -72,29 +73,29 @@ double food_calorie(double base_weight, double base_calorie, double weight){
   return weight/base_weight * base_calorie;
 }
 
-double workout_calorie(bool gender, double weight, double time){
-  //gender == true -> man.
-  double genderRatio = 1.0;
-  double baseWeight = 40;
-  double upperWeight = 150;
-  double baseCalorie = 1.7;
-  double upperCalorie = 3.1;
-  double weightRatio;
-  double calorieRatio;
-  if (weight >= baseWeight && weight <= upperWeight){
-    weightRatio = (weight - baseWeight)/(upperWeight - baseWeight);
-  }
-  else if (weight > upperWeight){
-    weightRatio = 1.0;
-  }
-  else {
-    weightRatio = 0.0;
-  }
-  if (!gender)genderRatio = 0.6074;
-  calorieRatio = baseCalorie + (upperCalorie - baseCalorie) * weightRatio;
-  return time * calorieRatio * genderRatio;
-   
-}
+//double workout_calorie(bool gender, double weight, double time){
+//  //gender == true -> man.
+//  double genderRatio = 1.0;
+//  double baseWeight = 40;
+//  double upperWeight = 150;
+//  double baseCalorie = 1.7;
+//  double upperCalorie = 3.1;
+//  double weightRatio;
+//  double calorieRatio;
+//  if (weight >= baseWeight && weight <= upperWeight){
+//    weightRatio = (weight - baseWeight)/(upperWeight - baseWeight);
+//  }
+//  else if (weight > upperWeight){
+//    weightRatio = 1.0;
+//  }
+//  else {
+//    weightRatio = 0.0;
+//  }
+//  if (!gender)genderRatio = 0.6074;
+//  calorieRatio = baseCalorie + (upperCalorie - baseCalorie) * weightRatio;
+//  return time * calorieRatio * genderRatio;
+//   
+//}
 double exercise_calorie(double met, double body_weight){
   return met * 3.5 * body_weight / 200.0;
 }
