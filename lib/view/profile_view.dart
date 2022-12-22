@@ -42,10 +42,7 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
-  Future<Profile> initDatabase() async {
-    _dbManager = DatabaseManager();
-    await _dbManager.init();
-
+  Future<Profile> getProfile() async {
     List<Map>? data = await _dbManager.get('Profile');
 
     return Profile(
@@ -57,8 +54,15 @@ class _ProfileViewState extends State<ProfileView> {
         numberToCalorieGoal(data![0]['calorieGoal']));
   }
 
+  Future<Profile> initDatabase() async {
+    await _dbManager.init();
+    return getProfile();
+  }
+
   @override
   void initState() {
+    _dbManager = DatabaseManager();
+
     super.initState();
   }
 
