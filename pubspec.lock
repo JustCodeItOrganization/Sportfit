@@ -296,7 +296,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.0"
-
   sqflite:
     dependency: "direct main"
     description:
@@ -311,7 +310,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0+2"
-
   stack_trace:
     dependency: transitive
     description:
