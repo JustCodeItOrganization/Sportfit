@@ -460,9 +460,9 @@ _launchVideo(String Url) async {
     }
   } else {
     if (await canLaunchUrl(
-        Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'))) {
+        Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ'))) {
       await launchUrl(
-          Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+          Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
     } else {
       throw 'Could not launch https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     }
