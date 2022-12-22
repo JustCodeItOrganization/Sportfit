@@ -12,13 +12,9 @@ const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 class PageCardioView extends StatefulWidget {
   const PageCardioView({Key? key}) : super(key: key);
+
   @override
   _PageCardioViewState createState() => _PageCardioViewState();
-  /*
-  static MyStatefulWidgetState of(BuildContext context) =>
-    context.findAncestorStateOfType<MyStatefulWidgetState>();
-    */
-
 }
 
 class _PageCardioViewState extends State<PageCardioView> {
@@ -28,47 +24,73 @@ class _PageCardioViewState extends State<PageCardioView> {
   int? eachRest;
   bool isReady = false;
   bool isFieldsEnabled = true;
-
+  bool setBasladi = false;
+  int counter = 0;
+  String _buttonWidgetTitle = "Antrenmana Başla";
   List<Widget> timerWidgets = <Widget>[];
   late Allocation alloc;
-/*
-  Widget returnTimer() {
-    return TimerView(
-      alloc: alloc,
-      callback: () {},
-    );
-  }
-*/
-  Widget buildTimer() {
-    //final bool start = (isReady == true) ? true : false;
 
+  Widget? returnTimer() {
+    return TimerView(
+        alloc: alloc,
+        autoStart: true,
+        callback: () {
+          setState(() {
+            isReady = false;
+            if (counter == numOfRepeat! * 2) {
+              _buttonWidgetTitle = "Antrenmana Başla";
+              setBasladi = false;
+              isReady = false;
+              isFieldsEnabled = true;
+            } else if (counter % 2 == 0) {
+              _buttonWidgetTitle = "Anternmana devam et";
+            } else {
+              _buttonWidgetTitle = "Dinlen";
+            }
+          });
+        });
+  }
+
+  Widget? buildTimer() {
     return !isReady
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ButtonWidget(
-                  text: "Anternmana Başla",
-                  onClicked: () {
-                    setState(() {
-                      alloc = Allocation(eachRepeat!, dropdown_value);
-                      //alloc!.time = eachRepeat!;
-                      //alloc!.title = dropdown_value;
-                      isFieldsEnabled = false;
-                      isReady = true;
-                    });
-                  }),
-            ],
-          )
-        : TimerView(
+        ? ButtonWidget(
+            text: _buttonWidgetTitle,
+            onClicked: () {
+              print(counter);
+              int _time;
+              String _title;
+              if (setBasladi == false) {
+                counter = 0;
+                setBasladi = true;
+              }
+              if (counter % 2 == 0) {
+                _time = eachRepeat!;
+                _title = dropdown_value;
+                counter++;
+              } else {
+                _time = eachRest!;
+                _title = "Dinlenme";
+                counter++;
+              }
+              setState(() {
+                alloc = Allocation(_time, _title);
+                isFieldsEnabled = false;
+                isReady = true;
+              });
+            })
+        : returnTimer()!;
+
+    /*
+        TimerView(
             alloc: alloc,
             callback: () {
               setState(() {
                 isReady = false;
                 isFieldsEnabled = true;
               });
-              print("AAAAAAA");
             },
           );
+          */
   }
 
   @override
@@ -122,7 +144,6 @@ class _PageCardioViewState extends State<PageCardioView> {
                       eachRepeat = int.parse(text);
                     }),
                   )),
-                  /*
                   Expanded(
                       child: TextField(
                     enabled: isFieldsEnabled,
@@ -132,8 +153,6 @@ class _PageCardioViewState extends State<PageCardioView> {
                       eachRest = int.parse(text);
                     }),
                   )),
-                  */
-                  /*
                   Expanded(
                       child: TextField(
                     enabled: isFieldsEnabled,
@@ -143,13 +162,12 @@ class _PageCardioViewState extends State<PageCardioView> {
                       numOfRepeat = int.parse(text);
                     },
                   )),
-                  */
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 20,
               ),
-              Expanded(child: buildTimer())
+              Flexible(flex: 2, child: buildTimer()!)
             ],
           )),
         ) //Center()child: TimerView())),

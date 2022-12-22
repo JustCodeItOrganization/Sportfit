@@ -6,7 +6,12 @@ import 'package:flutter_application_2/widgets/button_widget.dart';
 class TimerView extends StatefulWidget {
   Allocation alloc;
   final VoidCallback callback;
-  TimerView({super.key, required this.alloc, required this.callback});
+  final bool autoStart;
+  TimerView(
+      {super.key,
+      required this.alloc,
+      required this.callback,
+      required this.autoStart});
 
   @override
   State<StatefulWidget> createState() => _TimerView();
@@ -24,9 +29,11 @@ class _TimerView extends State<TimerView> {
   void initState() {
     super.initState();
     localAllocation = widget.alloc;
-    //initialTimer();
     maxSeconds = seconds = localAllocation.time;
     _title = localAllocation.title;
+    if (widget.autoStart == true) {
+      startTimer();
+    }
   }
 
   void resetTimer() => setState(() => seconds = maxSeconds);
@@ -60,7 +67,9 @@ class _TimerView extends State<TimerView> {
   void stopTimer({bool reset = true}) {
     if (reset) {
       resetTimer();
-      _mutex.unlock();
+      setState(() {
+        widget.callback();
+      });
     }
     setState(() {
       timer?.cancel();
@@ -75,6 +84,9 @@ class _TimerView extends State<TimerView> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buildTitle(),
+          const SizedBox(
+            height: 40,
+          ),
           buildTimer(),
           const SizedBox(
             height: 40,
