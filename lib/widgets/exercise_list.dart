@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/exercise.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExerciseList extends StatefulWidget {
   @override
@@ -307,7 +310,7 @@ class _ExerciseListState extends State<ExerciseList> {
                             height: 150,
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 20.0),
+                                horizontal: 20.0, vertical: 15.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,37 +339,68 @@ class _ExerciseListState extends State<ExerciseList> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _data[index].isCompleted =
-                                            !_data[index].isCompleted;
-                                        completedCal =
-                                            calculateCompletedCal(_data, 70);
-                                        print(completedCal);
-                                      });
-                                    },
-                                    style: TextButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 28),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0)),
-                                        foregroundColor:
-                                            (_data[index].isCompleted == false)
-                                                ? Colors.red
-                                                : Colors.green,
-                                        backgroundColor:
-                                            Color.fromARGB(255, 59, 59, 59)),
-                                    child: Icon(
-                                      Icons.ondemand_video,
-                                      size: 20,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _data[index].isCompleted =
+                                                !_data[index].isCompleted;
+                                            completedCal =
+                                                calculateCompletedCal(
+                                                    _data, 70);
+                                            print(completedCal);
+                                          });
+                                        },
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 22),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)),
+                                            foregroundColor:
+                                                (_data[index].isCompleted ==
+                                                        false)
+                                                    ? Colors.red
+                                                    : Colors.green,
+                                            backgroundColor: Color.fromARGB(
+                                                255, 59, 59, 59)),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 20,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 0.0, vertical: 10.0),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          _launchVideo(
+                                              "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                                        },
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 22),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0)),
+                                            foregroundColor: Colors.red,
+                                            backgroundColor: Color.fromARGB(
+                                                255, 59, 59, 59)),
+                                        child: Icon(
+                                          Icons.ondemand_video,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -409,6 +443,30 @@ double calculateCompletedCal(List<Exercise> data, int weigth) {
     }
   }
   return cal;
+}
+
+_launchVideo(String Url) async {
+  if (kIsWeb) {
+    if (await canLaunchUrl(Uri.parse(Url))) {
+      await launchUrl(Uri.parse(Url));
+    } else {
+      throw 'Could not launch $Url';
+    }
+  } else if (Platform.isIOS) {
+    if (await canLaunchUrl(
+        Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'))) {
+      await launchUrl(
+          Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+    }
+  } else {
+    if (await canLaunchUrl(
+        Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'))) {
+      await launchUrl(
+          Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+    } else {
+      throw 'Could not launch https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    }
+  }
 }
 
 /*

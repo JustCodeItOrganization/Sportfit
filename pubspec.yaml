@@ -45,6 +45,7 @@ dependencies:
   google_fonts: ^3.0.1
   localstorage: ^4.0.0+1
   numberpicker: ^2.1.1
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
