@@ -4,7 +4,6 @@ import 'package:flutter_application_2/view/page_cardio_view.dart';
 import 'package:flutter_application_2/view/page_diet_view.dart';
 import 'package:flutter_application_2/view/page_profile_view.dart';
 import 'package:flutter_application_2/view/page_workout_view.dart';
-import 'package:flutter_application_2/view/workout_page.dart';
 import 'package:flutter_application_2/widgets/navigation_page.dart';
 
 class NavMenu extends StatelessWidget {
@@ -48,7 +47,7 @@ class NavMenu extends StatelessWidget {
         ),
         const NavMenuPage(
           navMenuPageName: "Antrenman Sayfası",
-          navMenuPageView: WorkoutPage(),
+          navMenuPageView: PageWorkoutView(),
           navMenuIcon: Icon(Icons.sports),
         ),
         const NavMenuPage(
