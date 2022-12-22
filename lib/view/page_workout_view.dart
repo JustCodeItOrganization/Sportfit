@@ -30,7 +30,6 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
               //tablerin isimleri
               Tab(text: "Antrenman Sayfası Tab 1"),
               Tab(text: "Antrenman Sayfası Tab 2"),
-              Tab(text: "Antrenman Sayfası Tab 3")
             ],
           ),
         ),
@@ -39,7 +38,6 @@ class _PageWorkoutViewState extends State<PageWorkoutView> {
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
             ListModuleExercise(),
             ProfileView(),
-            Container()
           ],
         ),
       ),
