@@ -67,7 +67,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(title: const Text('Profilim')),
+            //appBar: AppBar(title: const Text('Profilim')),
             body: FutureBuilder(
                 future: futureProfile,
                 builder: (ctx, snapshot) {
