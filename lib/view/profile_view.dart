@@ -32,40 +32,34 @@ class _ProfileViewState extends State<ProfileView> {
   List<String> genderSelectionItems = ["Erkek", "Kadın"];
   List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
 
-  String numberToCalorieGoal(int number){
-
-    if(number == 1){
+  String numberToCalorieGoal(int number) {
+    if (number == 1) {
       return 'Kilo alma';
-    }
-    else if(number == 2){
+    } else if (number == 2) {
       return 'Kilo verme';
-    }
-    else {
+    } else {
       return 'Stabil kalma';
     }
   }
 
-  Future<Profile> readProfileFromDatabase() async {
+  Future<Profile> initDatabase() async {
+    _dbManager = DatabaseManager();
+    await _dbManager.init();
+
     List<Map>? data = await _dbManager.get('Profile');
+
     return Profile(
         data![0]['weight'],
         data![0]['height'],
         data[0]['age'],
         data![0]['fitnessLevel'].toString(),
-        data![0]['gender'] == 1 ? 'Erkek' : 'Kadın', numberToCalorieGoal(data![0]['calorieGoal']));
-
-  }
-
-  Future<void> initDatabase() async{
-    _dbManager = DatabaseManager();
-    await _dbManager.init();
-    futureProfile = readProfileFromDatabase();
+        data![0]['gender'] == 1 ? 'Erkek' : 'Kadın',
+        numberToCalorieGoal(data![0]['calorieGoal']));
   }
 
   @override
   void initState() {
     super.initState();
-    initDatabase();
   }
 
   _ProfileViewState();
@@ -76,7 +70,7 @@ class _ProfileViewState extends State<ProfileView> {
         child: Scaffold(
             appBar: AppBar(title: const Text('Profilim')),
             body: FutureBuilder(
-                future: futureProfile,
+                future: initDatabase(),
                 builder: (ctx, snapshot) {
                   if (snapshot.hasData) {
                     if (isProfileFetched) {
@@ -111,9 +105,11 @@ class _ProfileViewState extends State<ProfileView> {
                           StyledText('Hedef:${goal}'),
                         ],
                       ),
-                      Row(children: [
-                        StyledText('Alınması Gereken Kalori Miktarı:')
-                      ],),
+                      Row(
+                        children: [
+                          StyledText('Alınması Gereken Kalori Miktarı:')
+                        ],
+                      ),
                       Form(
                           key: _formKey,
                           child: Accordion(children: [
@@ -156,7 +152,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   TextFormField(
                                       controller: _ageTextController,
                                       decoration:
-                                      InputDecoration(hintText: 'Yaş'),
+                                          InputDecoration(hintText: 'Yaş'),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Yaş boş olamaz';
@@ -227,26 +223,27 @@ class _ProfileViewState extends State<ProfileView> {
                                 ],
                               ),
                             ),
-                            AccordionSection(header: const Text('Hedef'), content: Column(
-                              children: [
-                                DropDownMenu(items: goalSelectionItems, onChangedCallBack:
-                                    (selected){
-                                  String value = '';
-                                  if(selected == null){
-                                    value = 'Kilo alma';
-                                  }
-                                  else{
-                                    value = selected;
-                                  }
-                                  setState(() {
-                                    goal = value;
-                                  });
-                                }
-                                    , currentItem: goal)
-                              ],
-                            ))
+                            AccordionSection(
+                                header: const Text('Hedef'),
+                                content: Column(
+                                  children: [
+                                    DropDownMenu(
+                                        items: goalSelectionItems,
+                                        onChangedCallBack: (selected) {
+                                          String value = '';
+                                          if (selected == null) {
+                                            value = 'Kilo alma';
+                                          } else {
+                                            value = selected;
+                                          }
+                                          setState(() {
+                                            goal = value;
+                                          });
+                                        },
+                                        currentItem: goal)
+                                  ],
+                                ))
                           ])),
-
                     ]);
                   } else if (snapshot.hasError) {
                     return Center(
