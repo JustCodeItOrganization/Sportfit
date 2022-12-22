@@ -5,12 +5,12 @@ import 'dart:async';
 import 'dart:io';
 
 class Profile extends ChangeNotifier{
-   double weight;
-   double height;
-   int age;
-   String fitnessLevel;
-   String gender;
-   String goal;
+  double weight;
+  double height;
+  int age;
+  String fitnessLevel;
+  String gender;
+  String goal;
 
   Profile(this.weight, this.height, this.age, this.fitnessLevel, this.gender, this.goal);
 

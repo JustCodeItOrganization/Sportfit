@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
+import 'package:flutter_application_2/core/init/database_manager.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import './profile_storage.dart';
 import './../widgets/styled_text.dart';
@@ -24,25 +25,50 @@ class _ProfileViewState extends State<ProfileView> {
   final _weightTextController = TextEditingController();
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
+  late final DatabaseManager _dbManager;
   late Future<Profile> futureProfile;
 
   List<String> goalSelectionItems = ["Kilo alma", "Kilo verme", "Stabil kalma"];
   List<String> genderSelectionItems = ["Erkek", "Kadın"];
   List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
 
+  String numberToCalorieGoal(int number){
+
+    if(number == 1){
+      return 'Kilo alma';
+    }
+    else if(number == 2){
+      return 'Kilo verme';
+    }
+    else {
+      return 'Stabil kalma';
+    }
+  }
+
+  Future<Profile> readProfileFromDatabase() async {
+    List<Map>? data = await _dbManager.get('Profile');
+    return Profile(
+        data![0]['weight'],
+        data![0]['height'],
+        data[0]['age'],
+        data![0]['fitnessLevel'].toString(),
+        data![0]['gender'] == 1 ? 'Erkek' : 'Kadın', numberToCalorieGoal(data![0]['calorieGoal']));
+
+  }
+
+  Future<void> initDatabase() async{
+    _dbManager = DatabaseManager();
+    await _dbManager.init();
+    futureProfile = readProfileFromDatabase();
+  }
+
   @override
   void initState() {
     super.initState();
-    futureProfile = Profile.readProfileFromStorage();
+    initDatabase();
   }
 
-  Future<Profile> getProfileFromStorage() async {
-    return Profile.readProfileFromStorage();
-  }
-
-  _ProfileViewState() {
-    getProfileFromStorage();
-  }
+  _ProfileViewState();
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +156,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   TextFormField(
                                       controller: _ageTextController,
                                       decoration:
-                                          InputDecoration(hintText: 'Yaş'),
+                                      InputDecoration(hintText: 'Yaş'),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Yaş boş olamaz';
@@ -204,7 +230,7 @@ class _ProfileViewState extends State<ProfileView> {
                             AccordionSection(header: const Text('Hedef'), content: Column(
                               children: [
                                 DropDownMenu(items: goalSelectionItems, onChangedCallBack:
-                                (selected){
+                                    (selected){
                                   String value = '';
                                   if(selected == null){
                                     value = 'Kilo alma';
