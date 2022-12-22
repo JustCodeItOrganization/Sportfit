@@ -4,6 +4,7 @@ import 'package:flutter_application_2/view_model/home_view_model.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import './view/profile_storage.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
-        ChangeNotifierProvider(create: (_) => InputViewModel())
+        ChangeNotifierProvider(create: (_) => InputViewModel()),
       ],
       child: MaterialApp(
         title: 'MVVM',

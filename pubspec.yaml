@@ -46,6 +46,9 @@ dependencies:
   localstorage: ^4.0.0+1
   numberpicker: ^2.1.1
   url_launcher: ^6.1.7
+  path_provider: ^2.0.11
+  sqflite: ^2.2.2
+
 
 dev_dependencies:
   flutter_test:
