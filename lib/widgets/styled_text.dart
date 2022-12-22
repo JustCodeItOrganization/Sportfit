@@ -9,7 +9,7 @@ class StyledText extends StatelessWidget{
     return Container(
        margin: const EdgeInsets.all(30.0),
        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+        decoration: BoxDecoration(border: Border.all(color: Colors.blue, width: 2.0)),
       child: Text(text)
     );
   }

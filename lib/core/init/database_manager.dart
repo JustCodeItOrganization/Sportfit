@@ -26,6 +26,9 @@ class DatabaseManager {
             "CREATE TABLE Exercise (id INTEGER PRIMARY KEY,name TEXT,description TEXT,met REAL ,time INTEGER ,intensity INTEGER,is_completed BOOLEAN,set_count INTEGER,video_url TEXT,image_path TEXT)");
         await _db.execute(
             "CREATE TABLE Food (id INTEGER,name TEXT,baseCalories INTEGER,protein REAL,carbohydrate REAL,fat REAL,PRIMARY KEY (id))");
+        await _db.execute(
+          "INSERT INTO Profile (age, gender, height, weight, fitnessLevel, calorieGoal) VALUES(0, 0, 0, 0, 1, 0)"
+        );
       });
     }
   }

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_application_2/view/input_module_view.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
-import 'package:flutter/cupertino.dart';
 import './profile_storage.dart';
 import './../widgets/styled_text.dart';
 
@@ -22,12 +19,14 @@ class _ProfileViewState extends State<ProfileView> {
   String selectedGender = 'Erkek';
   String gender = 'Erkek';
   bool isProfileFetched = false;
+  String goal = "Kilo alma";
   final _formKey = GlobalKey<FormState>();
   final _weightTextController = TextEditingController();
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
   late Future<Profile> futureProfile;
 
+  List<String> goalSelectionItems = ["Kilo alma", "Kilo verme", "Stabil kalma"];
   List<String> genderSelectionItems = ["Erkek", "Kadın"];
   List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
 
@@ -63,6 +62,7 @@ class _ProfileViewState extends State<ProfileView> {
                       gender = profile.gender;
                       fitnessLevel = profile.fitnessLevel.toString();
                       isProfileFetched = true;
+                      goal = profile.goal;
                     }
 
                     return Column(children: [
@@ -80,125 +80,147 @@ class _ProfileViewState extends State<ProfileView> {
                       ),
                       Row(
                         children: [
-                          StyledText('Fitness Level:${fitnessLevel.toString()}')
+                          StyledText(
+                              'Fitness Level:${fitnessLevel.toString()}'),
+                          StyledText('Hedef:${goal}'),
                         ],
                       ),
-                      Form (key: _formKey, child:Accordion(
-                        children: [
-                          AccordionSection(
-                            header: const Text('Vücut özellikleri'),
-                            content: Column(
-                              children: [
-                                TextFormField(
-                                  controller: _weightTextController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Ağırlık(kg)',
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Ağırlık boş olamaz';
-                                    }
-
-                                    try{
-                                      double.parse(value);
-                                    }
-                                    on FormatException{
-                                      return 'Lütfen geçerli bir ağırlık giriniz';
-                                    }
-                                  },
-                                ),
-                                TextFormField(
-                                    controller: _heightTextController,
-                                    decoration: InputDecoration(
-                                        hintText: 'Uzunluk(cm)'),
+                      Row(children: [
+                        StyledText('Alınması Gereken Kalori Miktarı:')
+                      ],),
+                      Form(
+                          key: _formKey,
+                          child: Accordion(children: [
+                            AccordionSection(
+                              header: const Text('Vücut özellikleri'),
+                              content: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _weightTextController,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Ağırlık(kg)',
+                                    ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Uzunluk boş olamaz';
+                                        return 'Ağırlık boş olamaz';
                                       }
 
-                                      try{
+                                      try {
                                         double.parse(value);
+                                      } on FormatException {
+                                        return 'Lütfen geçerli bir ağırlık giriniz';
                                       }
-                                      on FormatException{
-                                        return 'Lütfen geçerli bir uzunluk giriniz';
-                                      }
-                                    }),
-                                TextFormField(
-                                    controller: _ageTextController,
-                                    decoration:
-                                        InputDecoration(hintText: 'Yaş'),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Yaş boş olamaz';
-                                      }
+                                    },
+                                  ),
+                                  TextFormField(
+                                      controller: _heightTextController,
+                                      decoration: InputDecoration(
+                                          hintText: 'Uzunluk(cm)'),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Uzunluk boş olamaz';
+                                        }
 
-                                      try{
-                                        int.parse(value);
-                                      }
-                                      on FormatException{
-                                        return 'Lütfen geçerli bir yaş giriniz';
-                                      }
-                                    }),
-                                DropDownMenu(
-                                  items: genderSelectionItems,
-                                  onChangedCallBack: (selected) => {
-                                    setState(() {
-                                      String value;
-                                      if (selected == null) {
-                                        value = 'Erkek';
-                                      } else {
-                                        value = selected;
-                                      }
-                                      selectedGender = value;
-                                    })
-                                  },
-                                  currentItem: selectedGender,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      if(_formKey.currentState!.validate()){
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('Kaydedildi')),
-                                        );
-                                      }
+                                        try {
+                                          double.parse(value);
+                                        } on FormatException {
+                                          return 'Lütfen geçerli bir uzunluk giriniz';
+                                        }
+                                      }),
+                                  TextFormField(
+                                      controller: _ageTextController,
+                                      decoration:
+                                          InputDecoration(hintText: 'Yaş'),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Yaş boş olamaz';
+                                        }
+
+                                        try {
+                                          int.parse(value);
+                                        } on FormatException {
+                                          return 'Lütfen geçerli bir yaş giriniz';
+                                        }
+                                      }),
+                                  DropDownMenu(
+                                    items: genderSelectionItems,
+                                    onChangedCallBack: (selected) => {
                                       setState(() {
-                                        weight = double.parse(
-                                            _weightTextController.text);
-                                        height = double.parse(
-                                            _heightTextController.text);
-                                        age =
-                                            int.parse(_ageTextController.text);
-                                        gender = selectedGender;
-                                      });
+                                        String value;
+                                        if (selected == null) {
+                                          value = 'Erkek';
+                                        } else {
+                                          value = selected;
+                                        }
+                                        selectedGender = value;
+                                      })
                                     },
-                                    child: Text('Verileri kaydet'))
-                              ],
+                                    currentItem: selectedGender,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text('Kaydedildi')),
+                                          );
+                                        }
+                                        setState(() {
+                                          weight = double.parse(
+                                              _weightTextController.text);
+                                          height = double.parse(
+                                              _heightTextController.text);
+                                          age = int.parse(
+                                              _ageTextController.text);
+                                          gender = selectedGender;
+                                        });
+                                      },
+                                      child: Text('Verileri kaydet'))
+                                ],
+                              ),
                             ),
-                          ),
-                          AccordionSection(
-                            header: Text('Fitness Level'),
-                            content: Column(
+                            AccordionSection(
+                              header: const Text('Fitness Level'),
+                              content: Column(
+                                children: [
+                                  DropDownMenu(
+                                      items: fitnessLevelSelectionItems,
+                                      onChangedCallBack: (selected) {
+                                        String value = '';
+                                        if (selected == null) {
+                                          value = '1';
+                                        } else {
+                                          value = selected;
+                                        }
+                                        setState(() {
+                                          fitnessLevel = value;
+                                        });
+                                      },
+                                      currentItem: fitnessLevel.toString()),
+                                ],
+                              ),
+                            ),
+                            AccordionSection(header: const Text('Hedef'), content: Column(
                               children: [
-                                DropDownMenu(
-                                    items: fitnessLevelSelectionItems,
-                                    onChangedCallBack: (selected) {
-                                      String value = '';
-                                      if (selected == null) {
-                                        value = '1';
-                                      } else {
-                                        value = selected;
-                                      }
-                                      setState(() {
-                                        fitnessLevel = value;
-                                      });
-                                    },
-                                    currentItem: fitnessLevel.toString()),
+                                DropDownMenu(items: goalSelectionItems, onChangedCallBack:
+                                (selected){
+                                  String value = '';
+                                  if(selected == null){
+                                    value = 'Kilo alma';
+                                  }
+                                  else{
+                                    value = selected;
+                                  }
+                                  setState(() {
+                                    goal = value;
+                                  });
+                                }
+                                    , currentItem: goal)
                               ],
-                            ),
-                          ),
-                        ],
-                      )
-                      ),
+                            ))
+                          ])),
+
                     ]);
                   } else if (snapshot.hasError) {
                     return Center(
