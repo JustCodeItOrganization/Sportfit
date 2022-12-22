@@ -63,6 +63,10 @@ double activity(int fitnesslevel){
   }
 }
 
+
+// 0 -> sabit kalma 
+// 1 -> kilo alma
+// 2 -> kilo verme
 double maintain_weight(bool gender, int age, double weight, double height, int fitnesslevel){
   double rmr = rmr_calculation(gender = gender, age = age, weight= weight , height = height);
   double activityMultiplier = activity(fitnesslevel);
