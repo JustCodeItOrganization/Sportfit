@@ -12,9 +12,13 @@ const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 class PageCardioView extends StatefulWidget {
   const PageCardioView({Key? key}) : super(key: key);
-
   @override
   _PageCardioViewState createState() => _PageCardioViewState();
+  /*
+  static MyStatefulWidgetState of(BuildContext context) =>
+    context.findAncestorStateOfType<MyStatefulWidgetState>();
+    */
+
 }
 
 class _PageCardioViewState extends State<PageCardioView> {
@@ -26,12 +30,15 @@ class _PageCardioViewState extends State<PageCardioView> {
   bool isFieldsEnabled = true;
 
   List<Widget> timerWidgets = <Widget>[];
-  Allocation? alloc;
-
+  late Allocation alloc;
+/*
   Widget returnTimer() {
-    return TimerView(alloc: alloc!);
+    return TimerView(
+      alloc: alloc,
+      callback: () {},
+    );
   }
-
+*/
   Widget buildTimer() {
     //final bool start = (isReady == true) ? true : false;
 
@@ -43,15 +50,25 @@ class _PageCardioViewState extends State<PageCardioView> {
                   text: "Anternmana Başla",
                   onClicked: () {
                     setState(() {
-                      alloc!.time = eachRepeat!;
-                      alloc!.title = dropdown_value;
+                      alloc = Allocation(eachRepeat!, dropdown_value);
+                      //alloc!.time = eachRepeat!;
+                      //alloc!.title = dropdown_value;
                       isFieldsEnabled = false;
                       isReady = true;
                     });
                   }),
             ],
           )
-        : TimerView(alloc: alloc!);
+        : TimerView(
+            alloc: alloc,
+            callback: () {
+              setState(() {
+                isReady = false;
+                isFieldsEnabled = true;
+              });
+              print("AAAAAAA");
+            },
+          );
   }
 
   @override

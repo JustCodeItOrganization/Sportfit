@@ -5,8 +5,8 @@ import 'package:flutter_application_2/widgets/button_widget.dart';
 
 class TimerView extends StatefulWidget {
   Allocation alloc;
-
-  TimerView({super.key, required this.alloc});
+  final VoidCallback callback;
+  TimerView({super.key, required this.alloc, required this.callback});
 
   @override
   State<StatefulWidget> createState() => _TimerView();
@@ -50,6 +50,9 @@ class _TimerView extends State<TimerView> {
         setState(() => seconds = seconds - 1);
       } else {
         stopTimer(reset: false);
+        setState(() {
+          widget.callback();
+        });
       }
     });
   }
