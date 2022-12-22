@@ -382,7 +382,8 @@ class _ExerciseListState extends State<ExerciseList> {
                                       child: TextButton(
                                         onPressed: () {
                                           _launchVideo(
-                                              "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                                              Url:
+                                                  "https://www.youtube.com/watch?v=Vr3cYuWO6KU");
                                         },
                                         style: TextButton.styleFrom(
                                             padding: EdgeInsets.symmetric(
@@ -445,7 +446,8 @@ double calculateCompletedCal(List<Exercise> data, int weigth) {
   return cal;
 }
 
-_launchVideo(String Url) async {
+_launchVideo(
+    {String Url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}) async {
   if (kIsWeb) {
     if (await canLaunchUrl(Uri.parse(Url))) {
       await launchUrl(Uri.parse(Url));
@@ -459,10 +461,8 @@ _launchVideo(String Url) async {
           Uri.parse('youtube://www.youtube.com/watch?v=dQw4w9WgXcQ'));
     }
   } else {
-    if (await canLaunchUrl(
-        Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ'))) {
-      await launchUrl(
-          Uri.parse('https://www.youtube.com/watch?v=dQw4w9WgXcQ'));
+    if (await canLaunchUrl(Uri.parse(Url))) {
+      await launchUrl(Uri.parse(Url));
     } else {
       throw 'Could not launch https://www.youtube.com/watch?v=dQw4w9WgXcQ';
     }
