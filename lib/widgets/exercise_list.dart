@@ -267,7 +267,7 @@ class _ExerciseListState extends State<ExerciseList> {
                 itemCount: _data.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) =>
-                    ReorderableDragStartListener(
+                    ReorderableDelayedDragStartListener(
                   key: Key(_data[index].id.toString()),
                   index: index,
                   child: Container(
@@ -325,13 +325,13 @@ class _ExerciseListState extends State<ExerciseList> {
                                         Text(_data[index].title,
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 24.0,
+                                                fontSize: 16.0,
                                                 fontWeight: FontWeight.w800)),
                                         Text(
                                           _data[index].numOfSets.toString(),
                                           style: TextStyle(
                                             color: Colors.grey,
-                                            fontSize: 16.0,
+                                            fontSize: 12.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         )
@@ -339,11 +339,12 @@ class _ExerciseListState extends State<ExerciseList> {
                                     ),
                                   ],
                                 ),
-                                Column(
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
                                       child: TextButton(
                                         onPressed: () {
                                           setState(() {
@@ -382,8 +383,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                       child: TextButton(
                                         onPressed: () {
                                           _launchVideo(
-                                              Url:
-                                                  "https://www.youtube.com/watch?v=Vr3cYuWO6KU");
+                                              Url:"https://www.youtube.com/watch?v=Vr3cYuWO6KU");
                                         },
                                         style: TextButton.styleFrom(
                                             padding: EdgeInsets.symmetric(
@@ -446,8 +446,7 @@ double calculateCompletedCal(List<Exercise> data, int weigth) {
   return cal;
 }
 
-_launchVideo(
-    {String Url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}) async {
+_launchVideo({String Url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}) async {
   if (kIsWeb) {
     if (await canLaunchUrl(Uri.parse(Url))) {
       await launchUrl(Uri.parse(Url));

@@ -3,8 +3,8 @@ import 'package:flutter_application_2/widgets/exercise_list.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
 import 'package:flutter_application_2/view/page_cardio_view.dart';
 
-class PageFive extends StatelessWidget {
-  const PageFive({super.key});
+class WorkoutPage extends StatelessWidget {
+  const WorkoutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
