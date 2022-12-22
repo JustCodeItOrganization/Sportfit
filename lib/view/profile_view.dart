@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
+import 'package:flutter_application_2/view_model/utility_functions_view_model.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import './profile_storage.dart';
 import './../widgets/styled_text.dart';
@@ -12,6 +13,11 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  bool genderF=true;
+  int fitnesslevelF=0;
+  int goalF = 0;
+  double target_calorie = 0;
+  
   double weight = 0;
   double height = 0;
   int age = 0;
@@ -19,16 +25,29 @@ class _ProfileViewState extends State<ProfileView> {
   String selectedGender = 'Erkek';
   String gender = 'Erkek';
   bool isProfileFetched = false;
-  String goal = "Kilo alma";
+  String goal = "Kilo Almak";
   final _formKey = GlobalKey<FormState>();
   final _weightTextController = TextEditingController();
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
   late Future<Profile> futureProfile;
 
-  List<String> goalSelectionItems = ["Kilo alma", "Kilo verme", "Stabil kalma"];
+  List<String> goalSelectionItems = ["Kilo Almak", "Kilo Vermek", "Stabil Kalmak"];
   List<String> genderSelectionItems = ["Erkek", "Kadın"];
-  List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
+  //List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
+  List<String> fitnessLevelSelectionItems = ['Sedanter (0 gün spor)',
+                                              'Az aktif (1-3 gün spor)',
+                                              'Ortalama akttif (3-5 gün spor) ',
+                                              'Çok aktif (6-7 gün spor)', 
+                                              'Ekstra aktif (profesyonel performans)'];
+  
+  // 1 -> sedentary (little to no exercise)
+  // 2 -> lightly active (light exercise 1–3 days per week)
+  // 3 -> moderately active (moderate exercise 3–5 days per week)
+  // 4 -> very active (hard exercise 6–7 days per week)
+  // 5 -> extra active (very hard exercise, training, or a physical job)
+
+
 
   @override
   void initState() {
@@ -174,6 +193,8 @@ class _ProfileViewState extends State<ProfileView> {
                                           age = int.parse(
                                               _ageTextController.text);
                                           gender = selectedGender;
+                                          if (gender == "Erkek") {genderF = true;}
+                                          else {genderF = false;}
                                         });
                                       },
                                       child: Text('Verileri kaydet'))
@@ -195,6 +216,12 @@ class _ProfileViewState extends State<ProfileView> {
                                         }
                                         setState(() {
                                           fitnessLevel = value;
+                                          if (fitnessLevel[0] == 'S') {fitnesslevelF = 1;}
+                                          else if (fitnessLevel[0] == 'A'){fitnesslevelF = 2;}
+                                          else if (fitnessLevel[0] == 'O'){fitnesslevelF = 3;}
+                                          else if (fitnessLevel[0] == 'Ç'){fitnesslevelF = 4;}
+                                          else if (fitnessLevel[0] == 'E'){fitnesslevelF = 5;}
+                                          double target_calorie = calorie_decision(genderF, gender, age, weight, height, fitnesslevelF, goalF);
                                         });
                                       },
                                       currentItem: fitnessLevel.toString()),
@@ -207,13 +234,16 @@ class _ProfileViewState extends State<ProfileView> {
                                 (selected){
                                   String value = '';
                                   if(selected == null){
-                                    value = 'Kilo alma';
+                                    value = 'Kilo Almak';
                                   }
                                   else{
                                     value = selected;
                                   }
                                   setState(() {
                                     goal = value;
+                                    if (goal == "Stabil Kalmak") {goalF = 0;}
+                                    else if (goal == "Kilo Almak") {goalF = 1;}
+                                    else if (goal == "Kilo Vermek") {goalF = 2;}
                                   });
                                 }
                                     , currentItem: goal)

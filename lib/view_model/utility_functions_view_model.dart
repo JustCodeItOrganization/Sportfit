@@ -73,6 +73,17 @@ double maintain_weight(bool gender, int age, double weight, double height, int f
   return rmr * activityMultiplier; 
 }
 
+double calorie_decision(bool,gender, int age, double weight, double height, int fitnesslevel, int desicion){
+  double maintaining_calorie = maintain_weight(gender, age, weight, height, fitnesslevel);
+  if (desicion == 1){
+    return maintaining_calorie*1.1;
+  }
+  else if (desicion == 2){
+    return maintaining_calorie * 0.9;
+  }
+  return maintaining_calorie;
+}
+
 double food_calorie(double base_weight, double base_calorie, double weight){
   return weight/base_weight * base_calorie;
 }
