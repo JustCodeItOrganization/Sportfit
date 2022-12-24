@@ -24,67 +24,67 @@ class _ListModuleFood extends State<ListModuleFood> {
         id: 1,
         name: "Makarna",
         description: "Makarna desc",
-        imagePath: "food.png",
+        imagePath: "assets/food.png",
         calorie: 150));
     _data.add(Food(
         id: 2,
         name: "Pilav",
         description: "Pilav",
-        imagePath: "pilav.png",
+        imagePath: "assets/pilav.png",
         calorie: 359));
     _data.add(Food(
         id: 3,
         name: "Tavuk",
         description: "Tavuk",
-        imagePath: "tavuk.png",
+        imagePath: "assets/tavuk.png",
         calorie: 239));
     _data.add(Food(
         id: 4,
         name: "Kırmızı Et",
         description: "Kırmızı Et",
-        imagePath: "et.png",
+        imagePath: "assets/et.png",
         calorie: 143));
     _data.add(Food(
         id: 5,
         name: "Brokoli",
         description: "Brokoli",
-        imagePath: "brokoli.png",
+        imagePath: "assets/brokoli.png",
         calorie: 33));
     _data.add(Food(
         id: 6,
         name: "Haşlanmış Yumurta",
         description: "Haşlanmış Yumurta",
-        imagePath: "yumurta.png",
+        imagePath: "assets/yumurta.png",
         calorie: 155));
     _data.add(Food(
         id: 7,
         name: "Sahanda Yumurta",
         description: "Sahanda Yumurta",
-        imagePath: "sahandayumurta.png",
+        imagePath: "assets/sahandayumurta.png",
         calorie: 140));
     _data.add(Food(
         id: 8,
         name: "Köfte",
         description: "Köfte",
-        imagePath: "kofte.png",
+        imagePath: "assets/kofte.png",
         calorie: 196));
     _data.add(Food(
         id: 9,
         name: "Yulaf Lapası",
         description: "Yulaf Lapası",
-        imagePath: "yulaf.png",
+        imagePath: "assets/yulaf.png",
         calorie: 50));
     _data.add(Food(
         id: 10,
         name: "Haşlanmış Patates",
         description: "Haşlanmış Patates",
-        imagePath: "patates.png",
+        imagePath: "assets/patates.png",
         calorie: 180));
     _data.add(Food(
         id: 11,
         name: "Bulgur",
         description: "Bulgur",
-        imagePath: "bulgur.png",
+        imagePath: "assets/bulgur.png",
         calorie: 180));
   }
 
