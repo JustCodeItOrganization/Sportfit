@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/food.dart';
 import 'package:flutter_application_2/widgets/list_item.dart';
+import 'package:hive/hive.dart';
 
 class ListModuleFood extends StatefulWidget {
   const ListModuleFood({super.key});
@@ -11,98 +12,80 @@ class ListModuleFood extends StatefulWidget {
 
 class _ListModuleFood extends State<ListModuleFood> {
   List<Food> _data = [];
+  final foods = Hive.box("food");
+
+  void initState() {
+    super.initState();
+    _data = check(_data);
+  }
 
   _ListModuleFood() {
     _data.add(Food(
         id: 1,
         name: "Makarna",
         description: "Makarna desc",
-        imagePath: "assets/food.png",
+        imagePath: "food.png",
         calorie: 150));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 2,
+        name: "Pilav",
+        description: "Pilav",
+        imagePath: "pilav.png",
+        calorie: 359));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 3,
+        name: "Tavuk",
+        description: "Tavuk",
+        imagePath: "tavuk.png",
+        calorie: 239));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 4,
+        name: "Kırmızı Et",
+        description: "Kırmızı Et",
+        imagePath: "et.png",
+        calorie: 143));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 5,
+        name: "Brokoli",
+        description: "Brokoli",
+        imagePath: "brokoli.png",
+        calorie: 33));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 6,
+        name: "Haşlanmış Yumurta",
+        description: "Haşlanmış Yumurta",
+        imagePath: "yumurta.png",
+        calorie: 155));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 7,
+        name: "Sahanda Yumurta",
+        description: "Sahanda Yumurta",
+        imagePath: "sahandayumurta.png",
+        calorie: 140));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 8,
+        name: "Köfte",
+        description: "Köfte",
+        imagePath: "kofte.png",
+        calorie: 196));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 9,
+        name: "Yulaf Lapası",
+        description: "Yulaf Lapası",
+        imagePath: "yulaf.png",
+        calorie: 50));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 10,
+        name: "Haşlanmış Patates",
+        description: "Haşlanmış Patates",
+        imagePath: "patates.png",
+        calorie: 180));
     _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
-    _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
-    _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
-    _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
-    _data.add(Food(
-        id: 1,
-        name: "Makarna",
-        description: "Makarna desc",
-        imagePath: "assets/food.png",
-        calorie: 150));
+        id: 11,
+        name: "Bulgur",
+        description: "Bulgur",
+        imagePath: "bulgur.png",
+        calorie: 180));
   }
 
   bool isCompleted = false;
@@ -124,19 +107,23 @@ class _ListModuleFood extends State<ListModuleFood> {
                   },
                 ))),
         Container(
-          child: Row(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Toplam Kalori: " + calculateTotalCal(_data).toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              SizedBox(
-                height: 10,
-              )
-            ],
+          color: Colors.blue,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                    child: Text(
+                  "Toplam Kalori: " + calculateTotalCal(_data).toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 30,
+                      color: Colors.white),
+                )),
+                SizedBox(height: 25),
+              ],
+            ),
           ),
         )
       ]),
@@ -202,16 +189,17 @@ class _ListModuleFood extends State<ListModuleFood> {
                           onPressed: () {
                             setState(() {
                               _data[index].isAdded = !_data[index].isAdded;
+                              foods.put(_data[index].id, _data[index].id);
                             });
                           },
                           style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 0, vertical: 22),
+                                  horizontal: 0, vertical: 15),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0)),
                               foregroundColor: (_data[index].isAdded == false)
                                   ? Colors.white
-                                  : Colors.green,
+                                  : Colors.black,
                               backgroundColor: Colors.blue),
                           child: Icon(
                             Icons.add_circle_outline_rounded,
@@ -240,12 +228,22 @@ double calculateTotalCal(List<Food> data) {
   return total;
 }
 
+List<Food> check(List<Food> data) {
+  final foods = Hive.box("food");
+
+  for (int i = 0; i < data.length; i++) {
+    if (foods.get(data[i].id) != null) {
+      data[i].isAdded = true;
+    }
+  }
+
+  return data;
+}
 /*
 class Item {
   String title;
   String description;
   bool isExpanded;
-
   Item(
       {required this.description,
       required this.title,

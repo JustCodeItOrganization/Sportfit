@@ -57,7 +57,7 @@ class NavMenu extends StatelessWidget {
           navMenuIcon: Icon(Icons.food_bank),
         ),
         const NavMenuPage(
-          navMenuPageName: "Kardiyo Sayfası",
+          navMenuPageName: "Zamanlayıcı",
           navMenuPageView: PageCardioView(),
           navMenuIcon: Icon(Icons.heart_broken),
         ),

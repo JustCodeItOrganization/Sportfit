@@ -13,7 +13,19 @@ class CompleteTimer extends StatefulWidget {
   State<CompleteTimer> createState() => _CompleteTimerState();
 }
 
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+const List<String> list = <String>[
+  "Bench Press",
+  "Bent Over Row",
+  "Deadlift",
+  "Decline Press",
+  "Dumbell Press",
+  "Dumbell Curl",
+  "Machine Chest Fly",
+  "Pull Ups",
+  "Push Ups",
+  "Shoulder Press",
+  "Squat"
+];
 
 class _CompleteTimerState extends State<CompleteTimer>
     with AutomaticKeepAliveClientMixin<CompleteTimer> {

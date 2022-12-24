@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/listModuleFood.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
+import 'package:hive/hive.dart';
 
 class PageDietView extends StatefulWidget {
   const PageDietView({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class PageDietView extends StatefulWidget {
 
 class _PageDietViewState extends State<PageDietView> {
   @override
+  List<Map<String, dynamic>> items_food = [];
+
   Widget build(BuildContext context) {
     return DefaultTabController(
       // length = tab sayisi

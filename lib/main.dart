@@ -5,8 +5,10 @@ import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import './view/profile_storage.dart';
+import 'package:hive/hive.dart';
 
-void main() {
+void main() async {
+  var box = Hive.openBox("food");
   runApp(MyApp());
 }
 
