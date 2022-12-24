@@ -12,7 +12,6 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-
   List<Map<String, dynamic>> _itemsPazartesi = [];
   List<Map<String, dynamic>> _itemsSali = [];
   List<Map<String, dynamic>> _itemsCarsamba = [];
@@ -28,7 +27,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
       child: Scaffold(
         drawer: NavMenu(),
         appBar: AppBar(
-          title: Text('Page Five'),
+          title: Center(
+              child: Text('Antrenmanlarım',
+                  style: TextStyle(
+                      color: Colors.white,))),
           bottom: const TabBar(
             isScrollable: true,
             tabs: [
