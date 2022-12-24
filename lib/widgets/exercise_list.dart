@@ -58,9 +58,27 @@ class _ExerciseListState extends State<ExerciseList> {
     print ("amount data is ${_exerciseBox.length}");
   }
 //HIVE END
-  final List _exerciseList = ["Bench", "Squat", "NEW"];
-  
-  String _exerciseName = "Bench";
+
+  void addexercise() {
+    var exerciseindex;
+    exerciseindex = _exerciseList.indexOf(_exerciseName);
+    print("index : ${exerciseindex}");
+    _createItem({
+      "id": UniqueKey().toString(),
+      "description": _exerciseDesc[exerciseindex],
+      "title": _exerciseName,
+      "videoUrl": _exerciseVideo[exerciseindex],
+      "imagePath": _exerciseImg[exerciseindex],
+      "metabolicEquivalent": 1.toString(),
+      "numOfReps": _repValue,
+      "numOfSets": _setValue
+    });
+  }
+  final List _exerciseList = ["Bench Press", "Bent Over Row", "Deadlift", "Decline Press", "Dumbell Press", "Dumbell Curl", "Machine Chest Fly", "Pull Ups", "Push Ups", "Shoulder Press", "Squat"];
+  final List _exerciseDesc = ["Bench Press", "Bent Over Row", "Deadlift", "Decline Press", "Dumbell Press", "Dumbell Curl", "Machine Chest Fly", "Pull Ups", "Push Ups", "Shoulder Press", "Squat"];
+  final List _exerciseVideo = ["https://www.youtube.com/watch?v=SCVCLChPQFY", "", "https://www.youtube.com/watch?v=1ZXobu7JvvE", "https://www.youtube.com/watch?v=iVh4B5bJ5OI", "https://www.youtube.com/watch?v=AqzDJHxynwo", "", "https://www.youtube.com/watch?v=th4z6ke6FHE", "", "https://www.youtube.com/watch?v=_l3ySVKYVJ8", "https://www.youtube.com/watch?v=5yWaNOvgFCM", "https://www.youtube.com/watch?v=ultWZbUMPL8"];
+  final List _exerciseImg = ["assets/bench-press.png", "assets/bent-over-row.jpg", "assets/deadlift.jpg", "assets/decline-bench-press.jpg", "assets/dumbell-bench-press.jpg", "assets/dumbell-curl.jpg", "assets/machine-chest-fly.jpg", "assets/pull-ups.jpg", "assets/push-ups.jpg", "assets/shoulder-press.jpg", "assets/squat.jpg"];
+  String _exerciseName = "Bench Press";
   int _setValue = 1;
   int _repValue = 1;
   List<Exercise> _data = [];
@@ -295,16 +313,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                       metabolicEquivalent: 1,    
                                       numOfReps: _repValue,
                                       numOfSets: _setValue));
-                                  _createItem({
-                                    "id": UniqueKey().toString(),
-                                    "description": "description",
-                                    "title": _exerciseName,
-                                    "videoUrl": "www.",
-                                    "imagePath": "assets/bench.png",
-                                    "metabolicEquivalent": 1.toString(),
-                                    "numOfReps": _repValue,
-                                    "numOfSets": _setValue
-                                    });
+                                  addexercise();
                                 });
                                 totalCal = calculateTotalCal(_data, 70);
                                 print(totalCal);

@@ -79,7 +79,18 @@ flutter:
   - assets/welcome.png
   - assets/welcome.svg
   - assets/Sporfit.png
-  - assets/bench.png
+  - assets/bench-press.png
+  - assets/bent-over-row.jpg
+  - assets/deadlift.jpg
+  - assets/decline-bench-press.jpg
+  - assets/dumbell-bench-press.jpg
+  - assets/dumbell-curl.jpg
+  - assets/machine-chest-fly.jpg
+  - assets/pull-ups.jpg
+  - assets/push-ups.jpg
+  - assets/shoulder-press.jpg
+  - assets/squat.jpg
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
