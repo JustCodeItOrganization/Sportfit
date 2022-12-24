@@ -48,6 +48,8 @@ dependencies:
   url_launcher: ^6.1.7
   path_provider: ^2.0.11
   sqflite: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 
 dev_dependencies:
@@ -77,6 +79,7 @@ flutter:
   - assets/welcome.png
   - assets/welcome.svg
   - assets/Sporfit.png
+  - assets/bench.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

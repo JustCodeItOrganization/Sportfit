@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view/exercise.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ExerciseList extends StatefulWidget {
   @override
@@ -11,7 +12,47 @@ class ExerciseList extends StatefulWidget {
 }
 
 class _ExerciseListState extends State<ExerciseList> {
+
+  List<Map<String, dynamic>> _items = [];
+  final _exerciseBox = Hive.box("exerciseBox");
+  @override
+  void initState(){
+    super.initState();
+    _refreshItems();
+  }
+  void _refreshItems(){
+    final boxdata = _exerciseBox.keys.map((key) {
+      final item = _exerciseBox.get(key);
+      return {"key": key,
+              "id": item["id"],
+              "description": item["description"],
+              "title": item["title"],
+              "videoUrl": item["videoUrl"],
+              "imagePath": item["imagePath"],
+              "metabolicEquivalent": item["metabolicEquivalent"],
+              "numOfReps": item["numOfReps"],
+              "numOfSets": item["numOfSets"]
+              };
+    }).toList();
+
+    setState(() {
+      _items = boxdata.reversed.toList();
+      print(_items.length);
+    });
+    }
+  Future<void> _createItem(Map<String, dynamic> newItem) async {
+    await _exerciseBox.add(newItem);
+    _refreshItems();
+    print ("amount data is ${_exerciseBox.length}");
+  }
+  Future<void> _deleteItem(int itemKey) async {
+    await _exerciseBox.delete(itemKey);
+    _refreshItems();
+    print ("amount data is ${_exerciseBox.length}");
+  }
+//HIVE END
   final List _exerciseList = ["Bench", "Squat", "NEW"];
+  
   String _exerciseName = "Bench";
   int _setValue = 1;
   int _repValue = 1;
@@ -28,7 +69,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -39,7 +81,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 3),
+          numOfSets: 3,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -50,7 +93,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -61,7 +105,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -72,7 +117,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -83,7 +129,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -94,7 +141,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     _data.add(
       Exercise(
@@ -105,7 +153,8 @@ class _ExerciseListState extends State<ExerciseList> {
           imagePath:
               "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
           metabolicEquivalent: 5,
-          numOfSets: 4),
+          numOfSets: 4,
+          numOfReps: 4),
     );
     totalCal = calculateTotalCal(_data, 70);
   }
@@ -227,6 +276,7 @@ class _ExerciseListState extends State<ExerciseList> {
                           ElevatedButton(
                               onPressed: () {
                                 print(_data.length);
+                                Navigator.pop(context);
                                 setState(() {
                                   _data.add(Exercise(
                                       id: UniqueKey().toString(),
@@ -235,8 +285,19 @@ class _ExerciseListState extends State<ExerciseList> {
                                       videoUrl: "www.",
                                       imagePath:
                                           "https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
-                                      metabolicEquivalent: _repValue,
+                                      metabolicEquivalent: 1,    
+                                      numOfReps: _repValue,
                                       numOfSets: _setValue));
+                                  _createItem({
+                                    "id": UniqueKey().toString(),
+                                    "description": "description",
+                                    "title": _exerciseName,
+                                    "videoUrl": "www.",
+                                    "imagePath": "assets/bench.png",
+                                    "metabolicEquivalent": 1.toString(),
+                                    "numOfReps": _repValue,
+                                    "numOfSets": _setValue
+                                    });
                                 });
                                 totalCal = calculateTotalCal(_data, 70);
                                 print(totalCal);
@@ -264,19 +325,21 @@ class _ExerciseListState extends State<ExerciseList> {
                     _data.insert(index, reorderData);
                   });
                 },
-                itemCount: _data.length,
+                itemCount: _items.length,
                 shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) =>
-                    ReorderableDelayedDragStartListener(
-                  key: Key(_data[index].id.toString()),
+                itemBuilder: (BuildContext context, int index) {
+                  final curretItem = _items[index];
+                  return ReorderableDelayedDragStartListener(
+                  key: Key(curretItem['id'].toString()),
                   index: index,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                     child: Dismissible(
-                      key: Key(_data[index].id.toString()),
+                      key: Key(curretItem['id'].toString()),
                       onDismissed: (direction) {
+                        _deleteItem(curretItem['key']);
                         setState(() {
                           _data.removeAt(index);
                           totalCal = calculateTotalCal(_data, 70);
@@ -291,7 +354,7 @@ class _ExerciseListState extends State<ExerciseList> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
-                              image: NetworkImage(_data[index].imagePath),
+                              image: AssetImage(curretItem['imagePath']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -322,18 +385,38 @@ class _ExerciseListState extends State<ExerciseList> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(_data[index].title,
+                                        Text(curretItem['title'],
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.w800)),
-                                        Text(
-                                          _data[index].numOfSets.toString(),
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              curretItem['numOfSets'].toString(),
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              " X ",
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              curretItem['numOfReps'].toString(),
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         )
                                       ],
                                     ),
@@ -410,8 +493,8 @@ class _ExerciseListState extends State<ExerciseList> {
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+  }),
             ),
           ],
         ));
