@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/widgets/exercise_list.dart';
 import 'package:flutter_application_2/widgets/navigation_menu.dart';
 import 'package:flutter_application_2/view/page_cardio_view.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class WorkoutPage extends StatelessWidget {
+class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
+
+  @override
+  State<WorkoutPage> createState() => _WorkoutPageState();
+}
+
+class _WorkoutPageState extends State<WorkoutPage> {
+
+  List<Map<String, dynamic>> _itemsPazartesi = [];
+  List<Map<String, dynamic>> _itemsSali = [];
+  List<Map<String, dynamic>> _itemsCarsamba = [];
+  List<Map<String, dynamic>> _itemsPersembe = [];
+  List<Map<String, dynamic>> _itemsCuma = [];
+  List<Map<String, dynamic>> _itemsCumartesi = [];
+  List<Map<String, dynamic>> _itemsPazar = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +46,13 @@ class WorkoutPage extends StatelessWidget {
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            ExerciseList(),
-            ExerciseList(),
-            ExerciseList(),
-            ExerciseList(),
-            ExerciseList(),
-            ExerciseList(),
-            ExerciseList(),
+            ExerciseList(_itemsPazartesi, "exerciseBoxPazartesi"),
+            ExerciseList(_itemsSali, "exerciseBoxSali"),
+            ExerciseList(_itemsCarsamba, "exerciseBoxCarsamba"),
+            ExerciseList(_itemsPersembe, "exerciseBoxPersembe"),
+            ExerciseList(_itemsCuma, "exerciseBoxCuma"),
+            ExerciseList(_itemsCumartesi, "exerciseBoxCumartesi"),
+            ExerciseList(_itemsPazar, "exerciseBoxPazar"),
           ],
         ),
       ),
