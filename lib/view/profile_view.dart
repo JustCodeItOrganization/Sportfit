@@ -53,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
   bool fitnessLevelReady = false;
   bool goalReady = false;
   bool bodyReady = false;
-
+  List<Map>? data;
   // 1 -> sedentary (little to no exercise)
   // 2 -> lightly active (light exercise 1–3 days per week)
   // 3 -> moderately active (moderate exercise 3–5 days per week)
@@ -66,25 +66,28 @@ class _ProfileViewState extends State<ProfileView> {
     futureProfile = Profile.readProfileFromStorage();
   }
 
-/*
   Future<Profile> getProfile() async {
-    List<Map>? data = await _db.get('Profile');
+    data = await _db.get('Profile');
 
     return Profile(
         data![0]['weight'],
         data![0]['height'],
         data![0]['age'],
-        data[0]['fitnessLevel'].toString(),
-        data[0]['gender'],
-        (data[0]['calorieGoal']));
+        data![0]['fitnessLevel'].toString(),
+        data![0]['gender'],
+        (data![0]['calorieGoal']));
   }
-*/
 
   Future<Profile> getProfileFromStorage() async {
     await initDatabase();
     List<Map>? data = await _db.get('Profile');
     print("MY DATA:  " + data.toString());
-
+    print(data!.length);
+    if (data!.length > 0) {
+      setState(() {
+        isProfileFetched = true;
+      });
+    }
     return Profile.readProfileFromStorage();
   }
 
@@ -106,13 +109,29 @@ class _ProfileViewState extends State<ProfileView> {
     return SafeArea(
         child: Scaffold(
             //appBar: AppBar(title: const Text('Profilim')),
-
             body: SingleChildScrollView(
       child: FutureBuilder(
           future: futureProfile,
           builder: (ctx, snapshot) {
             if (snapshot.hasData) {
               if (isProfileFetched) {
+                Profile profile = snapshot.data as Profile;
+                weight = profile.weight;
+                height = profile.height;
+                age = profile.age;
+                gender = profile.gender;
+                fitnessLevel = profile.fitnessLevel.toString();
+                isProfileFetched = true;
+                goal = profile.goal;
+
+                print(weight);
+                /*
+                  height = data![data!.length - 1]['height'];
+                  age = data![data!.length - 1]['age'];
+                  fitnessLevel = data![data!.length - 1]['fitnessLevel'];
+                  gender = data![data!.length - 1]['gender'];
+                  goal = data![data!.length - 1]['calorieGoal'];
+                  */
               } else {
                 Profile profile = snapshot.data as Profile;
                 weight = profile.weight;
@@ -123,15 +142,23 @@ class _ProfileViewState extends State<ProfileView> {
                 isProfileFetched = true;
                 goal = profile.goal;
               }
-              return Column(children: [
-                Form(
-                  key: _formKey,
-                  child: Accordion(
+              return Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      AccordionSection(
-                        header: const Text('Vücut özellikleri'),
-                        content: Column(
-                          children: [
+                      Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text(
+                            "Vücut Özellikleri",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Column(children: [
                             TextFormField(
                               controller: _weightTextController,
                               decoration: const InputDecoration(
@@ -148,6 +175,9 @@ class _ProfileViewState extends State<ProfileView> {
                                 }
                               },
                             ),
+                            SizedBox(
+                              height: 20,
+                            ),
                             TextFormField(
                                 controller: _heightTextController,
                                 decoration:
@@ -163,6 +193,9 @@ class _ProfileViewState extends State<ProfileView> {
                                     return 'Lütfen geçerli bir uzunluk giriniz';
                                   }
                                 }),
+                            SizedBox(
+                              height: 20,
+                            ),
                             TextFormField(
                                 controller: _ageTextController,
                                 decoration: InputDecoration(hintText: 'Yaş'),
@@ -177,6 +210,9 @@ class _ProfileViewState extends State<ProfileView> {
                                     return 'Lütfen geçerli bir yaş giriniz';
                                   }
                                 }),
+                            SizedBox(
+                              height: 20,
+                            ),
                             DropDownMenu(
                               items: genderSelectionItems,
                               onChangedCallBack: (selected) => {
@@ -193,89 +229,78 @@ class _ProfileViewState extends State<ProfileView> {
                               },
                               currentItem: selectedGender,
                             ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Kaydedildi')),
-                                    );
-                                  }
-                                  setState(() {
-                                    weight = double.parse(
-                                        _weightTextController.text);
-                                    height = double.parse(
-                                        _heightTextController.text);
-                                    age = int.parse(_ageTextController.text);
-                                    gender = selectedGender;
-                                    if (gender == "Erkek") {
-                                      genderF = true;
-                                    } else {
-                                      genderF = false;
-                                    }
-                                  });
-                                  // insertProfile(Profile2(age: age, weight: weight, ))
-                                },
-                                child: Text('Verileri kaydet'))
-                          ],
-                        ),
-                      ),
-                      AccordionSection(
-                        header: const Text('Fitness Level'),
-                        content: Column(
-                          children: [
-                            DropdownButtonFormField<String>(
-                              disabledHint:
-                                  Text(fitnessLevelSelectionItems.first),
-                              value: fitnessLevelSelectionItems.first,
-                              icon: const Icon(Icons.sports),
-                              elevation: 16,
-                              onChanged: (selected) {
-                                String? value = '';
-                                print(selected);
-                                value = selected;
-                                setState(() {
-                                  fitnessLevel = value!;
-                                  if (fitnessLevel[0] == 'S') {
-                                    fitnesslevelF = 1;
-                                  } else if (fitnessLevel[0] == 'A') {
-                                    fitnesslevelF = 2;
-                                  } else if (fitnessLevel[0] == 'O') {
-                                    fitnesslevelF = 3;
-                                  } else if (fitnessLevel[0] == 'Ç') {
-                                    fitnesslevelF = 4;
-                                  } else if (fitnessLevel[0] == 'E') {
-                                    fitnesslevelF = 5;
-                                  }
-
-                                  double target_calorie = calorie_decision(
-                                      genderF,
-                                      age,
-                                      weight,
-                                      height,
-                                      fitnesslevelF,
-                                      goalF);
-                                  fitnessLevelReady = true;
-                                });
-                              },
-                              items: fitnessLevelSelectionItems
-                                  .map<DropdownMenuItem<String>>((item) {
-                                return DropdownMenuItem(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          ],
-                        ),
-                      ),
-                      AccordionSection(
-                          header: const Text('Hedef'),
-                          content: Column(
+                          ]),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Column(
                             children: [
+                              const Text(
+                                "Fitness Yoğunluğu",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              DropdownButtonFormField<String>(
+                                disabledHint:
+                                    Text(fitnessLevelSelectionItems.first),
+                                value: fitnessLevelSelectionItems.first,
+                                icon: const Icon(Icons.sports),
+                                elevation: 16,
+                                onChanged: (selected) {
+                                  String? value = '';
+                                  print(selected);
+                                  value = selected;
+                                  setState(() {
+                                    fitnessLevel = value!;
+                                    if (fitnessLevel[0] == 'S') {
+                                      fitnesslevelF = 1;
+                                    } else if (fitnessLevel[0] == 'A') {
+                                      fitnesslevelF = 2;
+                                    } else if (fitnessLevel[0] == 'O') {
+                                      fitnesslevelF = 3;
+                                    } else if (fitnessLevel[0] == 'Ç') {
+                                      fitnesslevelF = 4;
+                                    } else if (fitnessLevel[0] == 'E') {
+                                      fitnesslevelF = 5;
+                                    }
+
+                                    double target_calorie = calorie_decision(
+                                        genderF,
+                                        age,
+                                        weight,
+                                        height,
+                                        fitnesslevelF,
+                                        goalF);
+                                    fitnessLevelReady = true;
+                                  });
+                                },
+                                items: fitnessLevelSelectionItems
+                                    .map<DropdownMenuItem<String>>((item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Column(
+                            children: [
+                              const Text(
+                                "Fitness Hedefi",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                ),
+                              ),
                               DropdownButtonFormField<String>(
                                 disabledHint: Text(goalSelectionItems.first),
                                 value: goalSelectionItems.first,
@@ -312,24 +337,41 @@ class _ProfileViewState extends State<ProfileView> {
                                 }).toList(),
                               )
                             ],
-                          ))
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        insertProfile(Profile2(
-                            age: age,
-                            weight: weight,
-                            height: height,
-                            gender: genderF,
-                            fitnessLevel: fitnesslevelF,
-                            calorieGoal: goalF));
-                      });
-                    },
-                    child: Text("submit")),
-              ]);
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  weight =
+                                      double.parse(_weightTextController.text);
+                                  height =
+                                      double.parse(_heightTextController.text);
+                                  age = int.parse(_ageTextController.text);
+                                  gender = selectedGender;
+                                  if (gender == "Erkek") {
+                                    genderF = true;
+                                  } else {
+                                    genderF = false;
+                                  }
+                                  insertProfile(Profile2(
+                                      age: age,
+                                      weight: weight,
+                                      height: height,
+                                      gender: genderF,
+                                      fitnessLevel: fitnesslevelF,
+                                      calorieGoal: goalF));
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 80, vertical: 16)),
+                              child: const Text("Profili Güncelle")),
+                        ],
+                      ))
+                    ]),
+              );
             } else if (snapshot.hasError) {
               return Center(
                 child: Text(
