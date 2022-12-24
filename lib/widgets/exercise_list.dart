@@ -38,31 +38,36 @@ class _ExerciseListState extends State<ExerciseList> {
               "imagePath": item["imagePath"],
               "metabolicEquivalent": item["metabolicEquivalent"],
               "numOfReps": item["numOfReps"],
-              "numOfSets": item["numOfSets"]
+              "numOfSets": item["numOfSets"],
+              "isDone": item["isDone"]
               };
     }).toList();
 
     setState(() {
       widget.a_items = boxdata.reversed.toList();
-      print(widget.a_items.length);
+      //print(widget.a_items.length);
     });
     }
   Future<void> _createItem(Map<String, dynamic> newItem) async {
     await _exerciseBox.add(newItem);
     _refreshItems();
-    print ("amount data is ${_exerciseBox.length}");
+    //print ("amount data is ${_exerciseBox.length}");
+  }
+  Future<void> _updateItem(int itemKey, Map<String, dynamic> item) async {
+    await _exerciseBox.put(itemKey, item);
+    _refreshItems();
   }
   Future<void> _deleteItem(int itemKey) async {
     await _exerciseBox.delete(itemKey);
     _refreshItems();
-    print ("amount data is ${_exerciseBox.length}");
+    //print ("amount data is ${_exerciseBox.length}");
   }
 //HIVE END
 
   void addexercise() {
     var exerciseindex;
     exerciseindex = _exerciseList.indexOf(_exerciseName);
-    print("index : ${exerciseindex}");
+    //print("index : ${exerciseindex}");
     _createItem({
       "id": UniqueKey().toString(),
       "description": _exerciseDesc[exerciseindex],
@@ -71,7 +76,8 @@ class _ExerciseListState extends State<ExerciseList> {
       "imagePath": _exerciseImg[exerciseindex],
       "metabolicEquivalent": 1.toString(),
       "numOfReps": _repValue,
-      "numOfSets": _setValue
+      "numOfSets": _setValue,
+      "isDone": false
     });
   }
   final List _exerciseList = ["Bench Press", "Bent Over Row", "Deadlift", "Decline Press", "Dumbell Press", "Dumbell Curl", "Machine Chest Fly", "Pull Ups", "Push Ups", "Shoulder Press", "Squat"];
@@ -295,12 +301,12 @@ class _ExerciseListState extends State<ExerciseList> {
                               setModalState(() {
                                 _exerciseName = value as String;
                               });
-                              print(_exerciseName);
+                              //print(_exerciseName);
                             },
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                print(_data.length);
+                                //print(_data.length);
                                 Navigator.pop(context);
                                 setState(() {
                                   _data.add(Exercise(
@@ -316,7 +322,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                   addexercise();
                                 });
                                 totalCal = calculateTotalCal(_data, 70);
-                                print(totalCal);
+                                //print(totalCal);
                               },
                               child: Text("BAS")),
                         ],
@@ -359,7 +365,7 @@ class _ExerciseListState extends State<ExerciseList> {
                         setState(() {
                           _data.removeAt(index);
                           totalCal = calculateTotalCal(_data, 70);
-                          print(totalCal);
+                          //print(totalCal);
                         });
                       },
                       child: Card(
@@ -447,12 +453,21 @@ class _ExerciseListState extends State<ExerciseList> {
                                       child: TextButton(
                                         onPressed: () {
                                           setState(() {
-                                            _data[index].isCompleted =
-                                                !_data[index].isCompleted;
+                                            _updateItem(curretItem['key'], {
+                                              "id": UniqueKey().toString(),
+                                              "description": curretItem["description"],
+                                              "title": curretItem["title"],
+                                              "videoUrl": curretItem["videoUrl"],
+                                              "imagePath": curretItem["imagePath"],
+                                              "metabolicEquivalent": 1.toString(),
+                                              "numOfReps": curretItem["numOfReps"],
+                                              "numOfSets": curretItem["numOfSets"],
+                                              "isDone": !curretItem["isDone"]
+                                            });
                                             completedCal =
                                                 calculateCompletedCal(
                                                     _data, 70);
-                                            print(completedCal);
+                                            //print(completedCal);
                                           });
                                         },
                                         style: TextButton.styleFrom(
@@ -463,7 +478,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                                     BorderRadius.circular(
                                                         20.0)),
                                             foregroundColor:
-                                                (_data[index].isCompleted ==
+                                                (curretItem['isDone'] ==
                                                         false)
                                                     ? Colors.red
                                                     : Colors.green,
@@ -482,7 +497,7 @@ class _ExerciseListState extends State<ExerciseList> {
                                       child: TextButton(
                                         onPressed: () {
                                           _launchVideo(
-                                              Url:"https://www.youtube.com/watch?v=Vr3cYuWO6KU");
+                                              Url:curretItem['videoUrl']);
                                         },
                                         style: TextButton.styleFrom(
                                             padding: EdgeInsets.symmetric(
