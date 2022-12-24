@@ -29,7 +29,7 @@ class _PageCardioViewState extends State<PageCardioView> {
               )
             ]),
             title: const Text(
-              "Kardiyo",
+              "Zamanlayıcı",
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,

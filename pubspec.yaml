@@ -52,6 +52,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,6 +93,16 @@ flutter:
   - assets/squat.jpg
   - assets/food.png
   - assets/makarna.png
+  - assets/brokoli.png
+  - assets/bulgur.png
+  - assets/et.png
+  - assets/kofte.png
+  - assets/patates.png
+  - assets/pilav.png
+  - assets/sahandayumurta.png
+  - assets/yumurta.png
+  - assets/tavuk.png
+  - assets/yulaf.png
 
   #   - images/a_dot_ham.jpeg
 
