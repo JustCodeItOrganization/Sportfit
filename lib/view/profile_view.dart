@@ -12,16 +12,32 @@ class ProfileView extends StatefulWidget {
   _ProfileViewState createState() => _ProfileViewState();
 }
 
+List<String> goalSelectionItems = [
+  "Kilo Almak",
+  "Kilo Vermek",
+  "Stabil Kalmak"
+];
+List<String> genderSelectionItems = ["Erkek", "Kadın"];
+//List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
+List<String> fitnessLevelSelectionItems = <String>[
+  'Sedanter (0 gün spor)',
+  'Az aktif (1-3 gün spor)',
+  'Ortalama akttif (3-5 gün spor)',
+  'Çok aktif (6-7 gün spor)',
+  'Ekstra aktif (profesyonel performans)'
+];
+
 class _ProfileViewState extends State<ProfileView> {
   bool genderF = true;
   int fitnesslevelF = 0;
   int goalF = 0;
   double target_calorie = 0;
 
+  String fitnessLevel = fitnessLevelSelectionItems.first;
   double weight = 0;
   double height = 0;
   int age = 0;
-  String fitnessLevel = "1";
+
   String selectedGender = 'Erkek';
   String gender = 'Erkek';
   bool isProfileFetched = false;
@@ -31,21 +47,6 @@ class _ProfileViewState extends State<ProfileView> {
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
   late Future<Profile> futureProfile;
-
-  List<String> goalSelectionItems = [
-    "Kilo Almak",
-    "Kilo Vermek",
-    "Stabil Kalmak"
-  ];
-  List<String> genderSelectionItems = ["Erkek", "Kadın"];
-  //List<String> fitnessLevelSelectionItems = ['1', '2', '3', '4', '5'];
-  List<String> fitnessLevelSelectionItems = [
-    'Sedanter (0 gün spor)',
-    'Az aktif (1-3 gün spor)',
-    'Ortalama akttif (3-5 gün spor) ',
-    'Çok aktif (6-7 gün spor)',
-    'Ekstra aktif (profesyonel performans)'
-  ];
 
   // 1 -> sedentary (little to no exercise)
   // 2 -> lightly active (light exercise 1–3 days per week)
@@ -89,29 +90,7 @@ class _ProfileViewState extends State<ProfileView> {
                 isProfileFetched = true;
                 goal = profile.goal;
               }
-
               return Column(children: [
-                Column(children: [
-                  Row(children: [
-                    StyledText('Ağırlık:${weight.toString()}'),
-                    StyledText('Uzunluk:${height.toString()}')
-                  ])
-                ]),
-                Row(
-                  children: [
-                    StyledText('Cinsiyet:${gender.toString()}'),
-                    StyledText('Yaş:${age.toString()}')
-                  ],
-                ),
-                Row(
-                  children: [
-                    StyledText('Fitness Level:${fitnessLevel.toString()}'),
-                    StyledText('Hedef:${goal}'),
-                  ],
-                ),
-                Row(
-                  children: [StyledText('Alınması Gereken Kalori Miktarı:')],
-                ),
                 Form(
                     key: _formKey,
                     child: Accordion(children: [
@@ -128,7 +107,6 @@ class _ProfileViewState extends State<ProfileView> {
                                 if (value == null || value.isEmpty) {
                                   return 'Ağırlık boş olamaz';
                                 }
-
                                 try {
                                   double.parse(value);
                                 } on FormatException {
@@ -210,39 +188,50 @@ class _ProfileViewState extends State<ProfileView> {
                         header: const Text('Fitness Level'),
                         content: Column(
                           children: [
-                            DropDownMenu(
-                                items: fitnessLevelSelectionItems,
-                                onChangedCallBack: (selected) {
-                                  String value = '';
-                                  if (selected == null) {
-                                    value = '1';
-                                  } else {
-                                    value = selected;
+                            DropdownButtonFormField<String>(
+                              disabledHint:
+                                  Text(fitnessLevelSelectionItems.first),
+                              value: fitnessLevelSelectionItems.first,
+                              icon: const Icon(Icons.sports),
+                              elevation: 16,
+                              onChanged: (selected) {
+                                String? value = '';
+                                print(selected);
+                                value = selected;
+                                setState(() {
+                                  fitnessLevel = value!;
+                                  if (fitnessLevel[0] == 'S') {
+                                    fitnesslevelF = 1;
+                                  } else if (fitnessLevel[0] == 'A') {
+                                    fitnesslevelF = 2;
+                                  } else if (fitnessLevel[0] == 'O') {
+                                    fitnesslevelF = 3;
+                                  } else if (fitnessLevel[0] == 'Ç') {
+                                    fitnesslevelF = 4;
+                                  } else if (fitnessLevel[0] == 'E') {
+                                    fitnesslevelF = 5;
                                   }
-                                  setState(() {
-                                    fitnessLevel = value;
-                                    if (fitnessLevel[0] == 'S') {
-                                      fitnesslevelF = 1;
-                                    } else if (fitnessLevel[0] == 'A') {
-                                      fitnesslevelF = 2;
-                                    } else if (fitnessLevel[0] == 'O') {
-                                      fitnesslevelF = 3;
-                                    } else if (fitnessLevel[0] == 'Ç') {
-                                      fitnesslevelF = 4;
-                                    } else if (fitnessLevel[0] == 'E') {
-                                      fitnesslevelF = 5;
-                                    }
-                                    double target_calorie = calorie_decision(
-                                        genderF,
-                                        gender,
-                                        age,
-                                        weight,
-                                        height,
-                                        fitnesslevelF,
-                                        goalF);
-                                  });
-                                },
-                                currentItem: fitnessLevel.toString()),
+
+                                  double target_calorie = calorie_decision(
+                                      genderF,
+                                      age,
+                                      weight,
+                                      height,
+                                      fitnesslevelF,
+                                      goalF);
+                                });
+                              },
+                              items: fitnessLevelSelectionItems
+                                  .map<DropdownMenuItem<String>>((item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }).toList(),
+                            )
                           ],
                         ),
                       ),
@@ -250,27 +239,40 @@ class _ProfileViewState extends State<ProfileView> {
                           header: const Text('Hedef'),
                           content: Column(
                             children: [
-                              DropDownMenu(
-                                  items: goalSelectionItems,
-                                  onChangedCallBack: (selected) {
-                                    String value = '';
-                                    if (selected == null) {
-                                      value = 'Kilo Almak';
-                                    } else {
-                                      value = selected;
+                              DropdownButtonFormField<String>(
+                                disabledHint: Text(goalSelectionItems.first),
+                                value: goalSelectionItems.first,
+                                icon: const Icon(Icons.sports),
+                                elevation: 16,
+                                onChanged: (selected) {
+                                  String value = '';
+                                  if (selected == null) {
+                                    value = 'Kilo Almak';
+                                  } else {
+                                    value = selected;
+                                  }
+                                  setState(() {
+                                    goal = value;
+                                    if (goal == "Stabil Kalmak") {
+                                      goalF = 0;
+                                    } else if (goal == "Kilo Almak") {
+                                      goalF = 1;
+                                    } else if (goal == "Kilo Vermek") {
+                                      goalF = 2;
                                     }
-                                    setState(() {
-                                      goal = value;
-                                      if (goal == "Stabil Kalmak") {
-                                        goalF = 0;
-                                      } else if (goal == "Kilo Almak") {
-                                        goalF = 1;
-                                      } else if (goal == "Kilo Vermek") {
-                                        goalF = 2;
-                                      }
-                                    });
-                                  },
-                                  currentItem: goal)
+                                  });
+                                },
+                                items: goalSelectionItems
+                                    .map<DropdownMenuItem<String>>((item) {
+                                  return DropdownMenuItem(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                }).toList(),
+                              )
                             ],
                           ))
                     ])),
