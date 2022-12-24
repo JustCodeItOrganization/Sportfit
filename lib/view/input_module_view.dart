@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view/home_view.dart';
+import 'package:flutter_application_2/view/home_page_view.dart';
 import 'package:flutter_application_2/view_model/input_view_model.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +48,8 @@ class inputElevatedButton extends StatelessWidget {
           onPressed: (() => {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const HomeView(),
+                    //builder: (context) => const HomeView(),
+                    builder: (context) => const PageHomeView(),
                   ),
                 )
               }),
@@ -61,8 +62,9 @@ class InputTextField extends StatelessWidget {
   const InputTextField({
     Key? key,
     required this.labelText,
+    this.isEnabled = true,
   }) : super(key: key);
-
+  final bool isEnabled;
   final String? labelText;
 
   @override
@@ -73,6 +75,7 @@ class InputTextField extends StatelessWidget {
           decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: labelText,
+        enabled: isEnabled,
       )),
     );
   }

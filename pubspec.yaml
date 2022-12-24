@@ -41,6 +41,17 @@ dependencies:
   get_it: ^7.2.0
   flutter_svg: ^1.1.6
   get: ^4.6.5
+  accordion: ^2.5.1
+  google_fonts: ^3.0.1
+  localstorage: ^4.0.0+1
+  numberpicker: ^2.1.1
+  url_launcher: ^6.1.7
+  path_provider: ^2.0.11
+  sqflite: ^2.2.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +79,31 @@ flutter:
   assets:
   - assets/welcome.png
   - assets/welcome.svg
+  - assets/Sporfit.png
+  - assets/bench-press.png
+  - assets/bent-over-row.jpg
+  - assets/deadlift.jpg
+  - assets/decline-bench-press.jpg
+  - assets/dumbell-bench-press.jpg
+  - assets/dumbell-curl.jpg
+  - assets/machine-chest-fly.jpg
+  - assets/pull-ups.jpg
+  - assets/push-ups.jpg
+  - assets/shoulder-press.jpg
+  - assets/squat.jpg
+  - assets/food.png
+  - assets/makarna.png
+  - assets/brokoli.png
+  - assets/bulgur.png
+  - assets/et.png
+  - assets/kofte.png
+  - assets/patates.png
+  - assets/pilav.png
+  - assets/sahandayumurta.png
+  - assets/yumurta.png
+  - assets/tavuk.png
+  - assets/yulaf.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
