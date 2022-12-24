@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view/complete_timer_view.dart';
 import 'package:flutter_application_2/view/page_cardio_view.dart';
 import 'package:flutter_application_2/widgets/button_widget.dart';
 

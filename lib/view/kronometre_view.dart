@@ -10,7 +10,8 @@ class KronometreView extends StatefulWidget {
   State<StatefulWidget> createState() => _KronometreView();
 }
 
-class _KronometreView extends State<KronometreView> {
+class _KronometreView extends State<KronometreView>
+    with AutomaticKeepAliveClientMixin<KronometreView> {
   int seconds = 0;
   int milisec = 0, _miliSec = 0;
   Timer? timer, timerMilSec;
@@ -69,7 +70,7 @@ class _KronometreView extends State<KronometreView> {
     return Scaffold(
       body: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           buildTimer(),
           const SizedBox(
@@ -154,4 +155,8 @@ class _KronometreView extends State<KronometreView> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
