@@ -1,12 +1,12 @@
-class Profile {
+class Profile2 {
   int? age;
   bool? gender;
   double? height;
-  int? weight;
+  double? weight;
   int? fitnessLevel;
   int? calorieGoal;
 
-  Profile(
+  Profile2(
       {this.age,
       this.gender,
       this.height,
@@ -14,7 +14,7 @@ class Profile {
       this.fitnessLevel,
       this.calorieGoal});
 
-  Profile.fromJson(Map<String, dynamic> json) {
+  Profile2.fromJson(Map<String, dynamic> json) {
     age = json['age'];
     gender = json['gender'];
     height = json['height'];
