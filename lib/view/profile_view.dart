@@ -53,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
   bool fitnessLevelReady = false;
   bool goalReady = false;
   bool bodyReady = false;
-  List<Map>? data;
+  List<Map>? datas;
   // 1 -> sedentary (little to no exercise)
   // 2 -> lightly active (light exercise 1–3 days per week)
   // 3 -> moderately active (moderate exercise 3–5 days per week)
@@ -67,15 +67,24 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Future<Profile> getProfile() async {
-    data = await _db.get('Profile');
+    datas = await _db.get('Profile');
+    int length = datas!.length - 1;
+    Map<dynamic, dynamic> data = datas![0];
 
     return Profile(
         data![0]['weight'],
         data![0]['height'],
         data![0]['age'],
-        data![0]['fitnessLevel'].toString(),
-        data![0]['gender'],
-        (data![0]['calorieGoal']));
+        getfitnessLevel(data![0]['fitnessLevel']),
+        getGender(data![0]['gender']),
+        (getCalorieGoal(data![0]['calorieGoal'])));
+  }
+
+  Future<Profile?> getProfile2() async {
+    datas = await _db.get('Profile');
+    Map<dynamic, dynamic> data = datas![datas!.length - 1];
+    Profile p = Profile(data['weight'], data['height'], data['age'],
+        data['fitnessLevel'], data['gender'], data['calorieGoal']);
   }
 
   Future<Profile> getProfileFromStorage() async {
@@ -96,8 +105,17 @@ class _ProfileViewState extends State<ProfileView> {
     _db.insert("Profile", p.toJson());
   }
 
-  Future<void> initDatabase() async {
+  Future<Profile> initDatabase() async {
     await _db.init();
+    List<Map>? data = await _db.get('Profile');
+    int length = data!.length - 1;
+    return Profile(
+        data![length]['weight'],
+        data![length]['height'],
+        data![length]['age'],
+        getfitnessLevel(data![length]['fitnessLevel']),
+        getGender(data![length]['gender']),
+        (getCalorieGoal(data![length]['calorieGoal'])));
   }
 
   _ProfileViewState() {
@@ -111,7 +129,7 @@ class _ProfileViewState extends State<ProfileView> {
             //appBar: AppBar(title: const Text('Profilim')),
             body: SingleChildScrollView(
       child: FutureBuilder(
-          future: futureProfile,
+          future: initDatabase(),
           builder: (ctx, snapshot) {
             if (snapshot.hasData) {
               if (isProfileFetched) {
@@ -124,7 +142,7 @@ class _ProfileViewState extends State<ProfileView> {
                 isProfileFetched = true;
                 goal = profile.goal;
 
-                print(weight);
+                print(profile.weight + profile.height + profile.age);
                 /*
                   height = data![data!.length - 1]['height'];
                   age = data![data!.length - 1]['age'];
@@ -162,7 +180,7 @@ class _ProfileViewState extends State<ProfileView> {
                             TextFormField(
                               controller: _weightTextController,
                               decoration: const InputDecoration(
-                                hintText: 'Ağırlık(kg)',
+                                hintText: 'Ağırlık(kg) ',
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -368,6 +386,11 @@ class _ProfileViewState extends State<ProfileView> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 80, vertical: 16)),
                               child: const Text("Profili Güncelle")),
+                          Text("Ağırlığım : " + weight.toString()),
+                          Text("Boyum: " + height.toString()),
+                          Text("Yaşım: " + age.toString()),
+                          Text("Fitness Seviyem: " + fitnessLevel.toString()),
+                          Text("Hedefim: " + goal.toString()),
                         ],
                       ))
                     ]),
@@ -383,5 +406,37 @@ class _ProfileViewState extends State<ProfileView> {
             return const Center();
           }),
     )));
+  }
+
+  String getGender(int gender) {
+    if (gender == 1) {
+      return "Erkek";
+    } else {
+      return "Kadın";
+    }
+  }
+
+  String getfitnessLevel(int fitness) {
+    if (fitness == 1) {
+      return fitnessLevelSelectionItems[0];
+    } else if (fitness == 2) {
+      return fitnessLevelSelectionItems[1];
+    } else if (fitness == 3) {
+      return fitnessLevelSelectionItems[2];
+    } else if (fitness == 4) {
+      return fitnessLevelSelectionItems[3];
+    } else {
+      return fitnessLevelSelectionItems[4];
+    }
+  }
+
+  String getCalorieGoal(int caloriegoal) {
+    if (caloriegoal == 0) {
+      return "Stabil Kalmak";
+    } else if (caloriegoal == 1) {
+      return "Kilo Almak";
+    } else {
+      return "Kilo Vermek";
+    }
   }
 }
