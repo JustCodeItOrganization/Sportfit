@@ -5,7 +5,7 @@ import 'package:flutter_application_2/model/profile_model.dart';
 class User {
   List<Food>? food;
   List<Exercise>? exercise;
-  Profile? profile;
+  Profile2? profile;
 
   User({this.food, this.exercise, this.profile});
 
@@ -23,7 +23,7 @@ class User {
       });
     }
     profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+        json['profile'] != null ? new Profile2.fromJson(json['profile']) : null;
   }
 
   Map<String, dynamic> toJson() {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:accordion/accordion.dart';
+import 'package:flutter_application_2/core/init/database_manager.dart';
+import 'package:flutter_application_2/model/profile_model.dart';
 import 'package:flutter_application_2/view_model/utility_functions_view_model.dart';
 import 'package:flutter_application_2/widgets/dropdown_button.dart';
 import './profile_storage.dart';
@@ -29,7 +31,7 @@ List<String> fitnessLevelSelectionItems = <String>[
 
 class _ProfileViewState extends State<ProfileView> {
   bool genderF = true;
-  int fitnesslevelF = 0;
+  int fitnesslevelF = 1;
   int goalF = 0;
   double target_calorie = 0;
 
@@ -47,6 +49,10 @@ class _ProfileViewState extends State<ProfileView> {
   final _heightTextController = TextEditingController();
   final _ageTextController = TextEditingController();
   late Future<Profile> futureProfile;
+  final DatabaseManager _db = DatabaseManager();
+  bool fitnessLevelReady = false;
+  bool goalReady = false;
+  bool bodyReady = false;
 
   // 1 -> sedentary (little to no exercise)
   // 2 -> lightly active (light exercise 1–3 days per week)
@@ -60,8 +66,35 @@ class _ProfileViewState extends State<ProfileView> {
     futureProfile = Profile.readProfileFromStorage();
   }
 
+/*
+  Future<Profile> getProfile() async {
+    List<Map>? data = await _db.get('Profile');
+
+    return Profile(
+        data![0]['weight'],
+        data![0]['height'],
+        data![0]['age'],
+        data[0]['fitnessLevel'].toString(),
+        data[0]['gender'],
+        (data[0]['calorieGoal']));
+  }
+*/
+
   Future<Profile> getProfileFromStorage() async {
+    await initDatabase();
+    List<Map>? data = await _db.get('Profile');
+    print("MY DATA:  " + data.toString());
+
     return Profile.readProfileFromStorage();
+  }
+
+  Future<void> insertProfile(Profile2 p) async {
+    print(p.toJson());
+    _db.insert("Profile", p.toJson());
+  }
+
+  Future<void> initDatabase() async {
+    await _db.init();
   }
 
   _ProfileViewState() {
@@ -92,8 +125,9 @@ class _ProfileViewState extends State<ProfileView> {
               }
               return Column(children: [
                 Form(
-                    key: _formKey,
-                    child: Accordion(children: [
+                  key: _formKey,
+                  child: Accordion(
+                    children: [
                       AccordionSection(
                         header: const Text('Vücut özellikleri'),
                         content: Column(
@@ -153,6 +187,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   } else {
                                     value = selected;
                                   }
+                                  bodyReady = true;
                                   selectedGender = value;
                                 })
                               },
@@ -179,6 +214,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       genderF = false;
                                     }
                                   });
+                                  // insertProfile(Profile2(age: age, weight: weight, ))
                                 },
                                 child: Text('Verileri kaydet'))
                           ],
@@ -219,6 +255,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       height,
                                       fitnesslevelF,
                                       goalF);
+                                  fitnessLevelReady = true;
                                 });
                               },
                               items: fitnessLevelSelectionItems
@@ -260,6 +297,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     } else if (goal == "Kilo Vermek") {
                                       goalF = 2;
                                     }
+                                    goalReady = true;
                                   });
                                 },
                                 items: goalSelectionItems
@@ -275,7 +313,22 @@ class _ProfileViewState extends State<ProfileView> {
                               )
                             ],
                           ))
-                    ])),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        insertProfile(Profile2(
+                            age: age,
+                            weight: weight,
+                            height: height,
+                            gender: genderF,
+                            fitnessLevel: fitnesslevelF,
+                            calorieGoal: goalF));
+                      });
+                    },
+                    child: Text("submit")),
               ]);
             } else if (snapshot.hasError) {
               return Center(
