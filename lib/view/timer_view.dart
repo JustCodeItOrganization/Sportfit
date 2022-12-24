@@ -1,37 +1,66 @@
 import 'dart:async';
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/view_model/home_view_model.dart';
+import 'package:flutter_application_2/view/complete_timer_view.dart';
+import 'package:flutter_application_2/view/page_cardio_view.dart';
 import 'package:flutter_application_2/widgets/button_widget.dart';
-import 'package:flutter_application_2/widgets/rounded_arrow_button.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class TimerView extends StatefulWidget {
-  const TimerView({super.key});
+  Allocation alloc;
+  final VoidCallback callback;
+  final bool autoStart;
+  TimerView(
+      {super.key,
+      required this.alloc,
+      required this.callback,
+      required this.autoStart});
 
   @override
   State<StatefulWidget> createState() => _TimerView();
 }
 
 class _TimerView extends State<TimerView> {
-  static const maxSeconds = 60;
-  int seconds = maxSeconds;
+  int maxSeconds = 0;
+  int seconds = 0;
   Timer? timer;
+  String _title = "deneme";
+  late Allocation localAllocation;
+  static final _mutex = AsyncMutex();
+
+  @override
+  void initState() {
+    super.initState();
+    localAllocation = widget.alloc;
+    maxSeconds = seconds = localAllocation.time;
+    _title = localAllocation.title;
+    if (widget.autoStart == true) {
+      startTimer();
+    }
+  }
 
   void resetTimer() => setState(() => seconds = maxSeconds);
-
+/*
+  Future<void> initialTimer() async {
+    for (var alloc in localAllocation) {
+      print(alloc.title);
+      seconds = maxSeconds = alloc.time;
+      _title = alloc.title;
+      startTimer(reset: true);
+      await _mutex.lock();
+    }
+  }
+*/
   void startTimer({bool reset = true}) {
     if (reset) {
       resetTimer();
     }
-
-    timer = Timer.periodic(Duration(milliseconds: 1000), (_) {
+    timer = Timer.periodic(const Duration(milliseconds: 1000), (_) {
       if (seconds > 0) {
-        setState(() => seconds--);
+        setState(() => seconds = seconds - 1);
       } else {
         stopTimer(reset: false);
+        setState(() {
+          widget.callback();
+        });
       }
     });
   }
@@ -39,32 +68,43 @@ class _TimerView extends State<TimerView> {
   void stopTimer({bool reset = true}) {
     if (reset) {
       resetTimer();
+      setState(() {
+        widget.callback();
+      });
     }
-    setState(() => timer?.cancel());
+    setState(() {
+      timer?.cancel();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildTimer(),
-            SizedBox(
-              height: 80,
-            ),
-            buildButtons(),
-          ],
-        )),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          buildTitle(),
+          const SizedBox(
+            height: 40,
+          ),
+          buildTimer(),
+          const SizedBox(
+            height: 40,
+          ),
+          buildButtons(),
+        ],
+      )),
     );
   }
 
+  Widget buildTitle() {
+    return Text(_title);
+  }
+
   Widget buildButtons() {
-    final isRunning = timer == null ? false : timer!.isActive;
-    final isCompleted = seconds == 0 || seconds == maxSeconds;
+    final isRunning = (timer == null) ? false : timer!.isActive;
+    final isCompleted = (seconds == 0) || seconds == maxSeconds;
 
     return isRunning || !isCompleted
         ? Row(
@@ -95,6 +135,7 @@ class _TimerView extends State<TimerView> {
             backgroundColor: Colors.blue,
             onClicked: () {
               startTimer();
+              //initialTimer();
             },
           );
   }
@@ -107,7 +148,7 @@ class _TimerView extends State<TimerView> {
           children: [
             CircularProgressIndicator(
               value: 1 - seconds / maxSeconds,
-              valueColor: AlwaysStoppedAnimation(Colors.white),
+              valueColor: const AlwaysStoppedAnimation(Colors.white),
               strokeWidth: 12,
               backgroundColor: Colors.blue,
             ),
@@ -120,17 +161,36 @@ class _TimerView extends State<TimerView> {
 
   Widget buildTime() {
     if (seconds == 0) {
-      return Icon(Icons.done, color: Colors.greenAccent, size: 112);
+      return const Icon(Icons.done, color: Colors.greenAccent, size: 112);
     } else {
-      //seconds = (seconds * 60).toInt();
       return Text(
         '$seconds',
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.blue,
           fontSize: 80,
         ),
       );
     }
+  }
+}
+
+class AsyncMutex {
+  Completer<void>? _completer;
+
+  /// locks the mutex
+  Future<void> lock() async {
+    while (_completer != null) {
+      await _completer!.future;
+    }
+    _completer = Completer<void>();
+  }
+
+  /// unlocks the mutex
+  void unlock() {
+    assert(_completer != null);
+    final completer = _completer!;
+    _completer = null;
+    completer.complete();
   }
 }
