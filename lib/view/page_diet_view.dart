@@ -14,7 +14,7 @@ class _PageDietViewState extends State<PageDietView> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       // length = tab sayisi
-      length: 2,
+      length: 1,
 
       child: Scaffold(
         drawer: const NavMenu(),
@@ -27,16 +27,16 @@ class _PageDietViewState extends State<PageDietView> {
           bottom: const TabBar(
             tabs: [
               // tablerin isimleri
-              Tab(text: "Diyet Tab 1"),
-              Tab(text: "Diyet Tab 2"),
+              Tab(
+                icon: Icon(Icons.food_bank_sharp),
+              ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             // Sayfa iceriklerini widget olarak olusturup childerenlara ekleyin.
-            ListModuleFood(),
-            Container(color: Colors.white),
+            ListModuleFood()
           ],
         ),
       ),
