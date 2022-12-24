@@ -11,6 +11,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   var box = await Hive.openBox("exerciseBox");
+  var boxPazartesi = await Hive.openBox("exerciseBoxPazartesi");
+  var boxSali = await Hive.openBox("exerciseBoxSali");
+  var boxCarsamba = await Hive.openBox("exerciseBoxCarsamba");
+  var boxPersembe = await Hive.openBox("exerciseBoxPersembe");
+  var boxCuma = await Hive.openBox("exerciseBoxCuma");
+  var boxCumartesi = await Hive.openBox("exerciseBoxCumartesi");
+  var boxPazar = await Hive.openBox("exerciseBoxPazar");
 
   runApp(MyApp());
 }

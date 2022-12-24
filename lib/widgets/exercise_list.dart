@@ -7,14 +7,21 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ExerciseList extends StatefulWidget {
+  List<Map<String, dynamic>> a_items = [];
+  String boxname = "";
+  ExerciseList(List<Map<String, dynamic>> a_items, String boxname){
+    this.a_items = a_items; 
+    this.boxname = boxname;
+    
+  }
   @override
   State<ExerciseList> createState() => _ExerciseListState();
 }
 
 class _ExerciseListState extends State<ExerciseList> {
+  late String boxxname = widget.boxname;
 
-  List<Map<String, dynamic>> _items = [];
-  final _exerciseBox = Hive.box("exerciseBox");
+  late final _exerciseBox = Hive.box(boxxname);
   @override
   void initState(){
     super.initState();
@@ -36,8 +43,8 @@ class _ExerciseListState extends State<ExerciseList> {
     }).toList();
 
     setState(() {
-      _items = boxdata.reversed.toList();
-      print(_items.length);
+      widget.a_items = boxdata.reversed.toList();
+      print(widget.a_items.length);
     });
     }
   Future<void> _createItem(Map<String, dynamic> newItem) async {
@@ -325,10 +332,10 @@ class _ExerciseListState extends State<ExerciseList> {
                     _data.insert(index, reorderData);
                   });
                 },
-                itemCount: _items.length,
+                itemCount: widget.a_items.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  final curretItem = _items[index];
+                  final curretItem = widget.a_items[index];
                   return ReorderableDelayedDragStartListener(
                   key: Key(curretItem['id'].toString()),
                   index: index,
